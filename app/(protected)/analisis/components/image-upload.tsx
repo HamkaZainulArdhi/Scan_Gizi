@@ -92,14 +92,14 @@ export function ImageUpload({
   };
 
   return (
-    <div className="w-full max-w-6xl garis  ">
+    <div className="w-full max-w-6xl h-84">
       {!uploadedImage ? (
-        <Card className="border-2 border-dashed border-border hover:border-primary/50 transition-colors">
-          <CardContent className="p-8">
+        <Card className="border-2 border-dashed border-border hover:border-primary/50 transition-colors h-full">
+          <CardContent className="p-8 ">
             <div
               {...getRootProps()}
               className={cn(
-                'flex flex-col items-center justify-center space-y-4 cursor-pointer',
+                'flex flex-col items-center justify-center space-y-4 cursor-pointer h-full',
                 isDragActive && 'opacity-50',
                 (isUploading || isAnalyzing) && 'cursor-not-allowed opacity-50',
               )}
@@ -112,7 +112,7 @@ export function ImageUpload({
                   <Upload className="w-8 h-8 text-primary" />
                 )}
               </div>
-              <div className="text-center">
+              <div className="text-center items-center justify-center">
                 <h3 className="text-lg font-semibold text-foreground">
                   {isUploading ? 'Uploading...' : 'Upload Menu'}
                 </h3>

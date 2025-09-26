@@ -63,10 +63,18 @@ export async function POST(request: NextRequest) {
     return Response.json(scanResult);
   } catch (error) {
     console.error('[v0] API error:', error);
-    return Response.json(
-      { error: error instanceof Error ? error.message : 'Analysis failed' },
-      { status: 500 },
-    );
+    let message = 'Analysis failed';
+    if (error instanceof Error) {
+      message = error.message;
+
+      // Tangkap error Gemini overload (503)
+      if (message.includes('503')) {
+        message =
+          'Layanan sedang sibuk karena terlalu banyak request. Mohon tunggu beberapa saat dan pastikan yang diupload adalah foto menu makanan.';
+      }
+    }
+
+    return Response.json({ error: message }, { status: 500 });
   }
 }
 

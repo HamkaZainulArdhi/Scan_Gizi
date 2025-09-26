@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { User as SupabaseUser } from '@supabase/supabase-js';
 import { History, LogOut, Scan, Sparkles, User } from 'lucide-react';
@@ -9,7 +8,6 @@ import { createClient } from '@/lib/supabase/client';
 import type { NutritionScan } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
 import { ImageUpload } from './image-upload';
 import { NutritionResults } from './nutrition-results';
 import { NutritionReview } from './nutrition-review';
@@ -42,11 +40,13 @@ export function DashboardContent({ user }: DashboardContentProps) {
         body: JSON.stringify({ imageUrl }),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error('Gagal menganalisis gambar');
+        throw new Error(data.error || 'Gagal menganalisis gambar');
       }
 
-      const scanResult: NutritionScan = await response.json();
+      const scanResult: NutritionScan = data;
       setCurrentScan(scanResult);
       setViewState('review');
     } catch (err) {
@@ -101,10 +101,10 @@ export function DashboardContent({ user }: DashboardContentProps) {
   };
 
   return (
-    <div className="min-h-screen bg-background garis">
-      <main className="container mx-auto px-4 garis h-full">
+    <div className="bg-background h-[500px] ">
+      <main className="container mx-auto px-4 h-full">
         {viewState === 'upload' && (
-          <div className="max-w-4xl mx-auto  garis">
+          <div className="max-w-4xl mx-auto  min-h-full">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-foreground mb-4">
                 Analisis Gizi & kelayakan Menu MBG biar ga pada keracunan
@@ -115,7 +115,7 @@ export function DashboardContent({ user }: DashboardContentProps) {
               </p>
             </div>
 
-            <div className="flex-1 w-full">
+            <div className="flex-1 w-full ">
               <ImageUpload
                 onImageUploaded={handleImageUploaded}
                 key={imageUploadKey}

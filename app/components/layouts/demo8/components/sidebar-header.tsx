@@ -10,7 +10,7 @@ export function SidebarHeader() {
       <Link href="/">
         <Image
           src={toAbsoluteUrl('/media/BGN_LOGO.png')}
-          width={68}
+          width={50}
           height={50}
           priority
           className="min-h-[20px]"

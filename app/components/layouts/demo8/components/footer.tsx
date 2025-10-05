@@ -22,35 +22,28 @@ export function Footer() {
           </div>
           <nav className="flex order-1 md:order-2 gap-4 font-normal text-sm text-muted-foreground">
             <a
-              href={generalSettings.docsLink}
-              target="_blank"
-              className="hover:text-primary"
-            >
-              Docs
-            </a>
-            <a
-              href={generalSettings.purchaseLink}
+              href="https://docs.ultralytics.com/models/yolo11/"
               target="_blank"
               className="hover:text-primary"
             >
               YOLO
             </a>
             <a
-              href={generalSettings.faqLink}
+              href="https://ai.google.dev/gemini-api/docs"
               target="_blank"
               className="hover:text-primary"
             >
               LLM
             </a>
             <a
-              href="https://devs.keenthemes.com"
+              href="https://www.bgn.go.id/"
               target="_blank"
               className="hover:text-primary"
             >
               Support
             </a>
             <a
-              href={generalSettings.licenseLink}
+              href="https://hamkacv.vercel.app/"
               target="_blank"
               className="hover:text-primary"
             >

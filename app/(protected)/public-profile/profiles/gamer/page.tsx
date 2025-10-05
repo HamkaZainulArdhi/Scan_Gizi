@@ -39,29 +39,7 @@ export default function ProfileGamerPage() {
           { email: 'Level 22', icon: ScanEye },
         ]}
       />
-      <Container>
-        <Navbar>
-          <PageMenu />
-          <NavbarActions>
-            <Button>
-              <Users /> Connect
-            </Button>
-            <Button variant="outline">
-              <SquarePlus /> Invite to Team
-            </Button>
-            <Button variant="outline" mode="icon">
-              <MessagesSquare />
-            </Button>
-            <DropdownMenu9
-              trigger={
-                <Button variant="outline" mode="icon">
-                  <EllipsisVertical />
-                </Button>
-              }
-            />
-          </NavbarActions>
-        </Navbar>
-      </Container>
+      <Container></Container>
       <Container>
         <ProfileGamerContent />
       </Container>

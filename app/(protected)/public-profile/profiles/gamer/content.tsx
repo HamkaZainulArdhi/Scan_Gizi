@@ -6,6 +6,7 @@ import {
   RiYoutubeLine,
 } from '@remixicon/react';
 import { Dribbble } from 'lucide-react';
+import { EarningsChart } from '@/app/(protected)/components/demo1';
 import {
   INetworkItems,
   Network,
@@ -69,8 +70,7 @@ export function ProfileGamerContent() {
       <div className="col-span-2">
         <div className="flex flex-col gap-5 lg:gap-7.5">
           <Tournaments />
-          <NowPlaying />
-          <Activity />
+          <EarningsChart />
         </div>
       </div>
     </div>

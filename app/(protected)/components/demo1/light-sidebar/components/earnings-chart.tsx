@@ -35,14 +35,13 @@ const EarningsChart = () => {
   ];
 
   useEffect(() => {
-    // No need to fetch data, just use the dummy data directly
     setChartData(dummyChartData);
   }, []);
 
   const options: ApexOptions = {
     series: [
       {
-        name: 'Earnings',
+        name: 'Skala Gizi',
         data: chartData ?? [],
       },
     ],
@@ -109,29 +108,29 @@ const EarningsChart = () => {
           fontSize: '12px',
         },
         formatter: (defaultValue) => {
-          return `$${defaultValue}K`;
+          return `${defaultValue} Kcal`;
         },
       },
     },
     tooltip: {
       enabled: true,
       custom({ series, seriesIndex, dataPointIndex, w }) {
-        const number = parseInt(series[seriesIndex][dataPointIndex]) * 1000;
+        const number = parseInt(series[seriesIndex][dataPointIndex]) * 10;
         const month = w.globals.seriesX[seriesIndex][dataPointIndex];
         const monthName = categories[month];
 
         const formatter = new Intl.NumberFormat('en-US', {
           style: 'currency',
-          currency: 'USD',
+          currency: 'IDR',
         });
 
         const formattedNumber = formatter.format(number);
 
         return `
           <div class="flex flex-col gap-2 p-3.5">
-            <div class="font-medium text-sm text-secondary-foreground">${monthName}, 2024 Sales</div>
+            <div class="font-medium text-sm text-secondary-foreground">${monthName}, 2025 </div>
             <div class="flex items-center gap-1.5">
-              <div class="font-semibold text-base text-mono">${formattedNumber}</div>
+              <div class="font-semibold text-base text-mono"> ${number} Kcal</div>
               <span class="rounded-full border border-green-200 font-medium dark:border-green-850 text-success-700 bg-green-100 dark:bg-green-950/30 text-[11px] leading-none px-1.25 py-1">+24%</span>
             </div>
           </div>
@@ -183,23 +182,23 @@ const EarningsChart = () => {
   return (
     <Card className="h-full">
       <CardHeader>
-        <CardTitle>Earnings</CardTitle>
+        <CardTitle>Skala Gizi Tersalurkan</CardTitle>
         <div className="flex gap-5">
           <div className="flex items-center gap-2">
             <Label htmlFor="auto-update" className="text-sm">
-              Referrals only
+              Pembaharuan
             </Label>
-            <Switch id="auto-update" defaultChecked size="sm" />
+            {/* <Switch id="auto-update" defaultChecked size="sm" /> */}
           </div>
           <Select defaultValue="1">
             <SelectTrigger className="w-28">
               <SelectValue placeholder="Select" />
             </SelectTrigger>
             <SelectContent className="w-28">
-              <SelectItem value="1">1 month</SelectItem>
-              <SelectItem value="3">3 months</SelectItem>
-              <SelectItem value="6">6 months</SelectItem>
-              <SelectItem value="12">12 months</SelectItem>
+              <SelectItem value="1">1 minggu</SelectItem>
+              <SelectItem value="3">1 months</SelectItem>
+              <SelectItem value="6">3 months</SelectItem>
+              <SelectItem value="12">5 months</SelectItem>
             </SelectContent>
           </Select>
         </div>

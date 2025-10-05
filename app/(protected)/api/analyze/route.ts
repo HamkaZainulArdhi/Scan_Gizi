@@ -1,11 +1,11 @@
 import type { NextRequest } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { createClient } from '@/lib/supabase/server';
 import type {
   MenuItemDetection,
   NutritionAnalysis,
   NutritionScan,
-} from '@/lib/types';
+} from '@/types/types';
+import { createClient } from '@/lib/supabase/server';
 
 const googleApiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
 if (!googleApiKey) {
@@ -32,32 +32,30 @@ export async function POST(request: NextRequest) {
     console.log('[v0] Nutrition analysis complete:', nutritionFacts);
 
     // Step 3: Save to Supabase
-    console.log('[v0] Saving to database');
-    const supabase = await createClient();
-    const { data, error } = await supabase
-      .from('nutrition_scans')
-      .insert({
-        image_url: imageUrl,
-        menu_items: menuItems,
-        nutrition_facts: nutritionFacts,
-      })
-      .select()
-      .single();
+    // console.log('[v0] Saving to database');
+    // const supabase = await createClient();
+    // const { data, error } = await supabase
+    //   .from('nutrition_scans')
+    //   .insert({
+    //     image_url: imageUrl,
+    //     menu_items: menuItems,
+    //     nutrition_facts: nutritionFacts,
+    //   })
+    //   .select()
+    //   .single();
 
-    if (error) {
-      console.error('[v0] Database error:', error);
-      throw new Error(`Database error: ${error.message}`);
-    }
+    // if (error) {
+    //   console.error('[v0] Database error:', error);
+    //   throw new Error(`Database error: ${error.message}`);
+    // }
 
-    console.log('[v0] Successfully saved scan result');
+    // console.log('[v0] Successfully saved scan result');
 
-    const scanResult: NutritionScan = {
-      id: data.id,
-      image_url: data.image_url,
-      scan_date: data.scan_date,
-      menu_items: data.menu_items,
-      nutrition_facts: data.nutrition_facts,
-      created_at: data.created_at,
+    const scanResult = {
+      image_url: imageUrl,
+      scan_date: new Date().toISOString(),
+      menu_items: menuItems,
+      nutrition_facts: nutritionFacts,
     };
 
     return Response.json(scanResult);
@@ -90,8 +88,8 @@ Output format: Return ONLY a valid JSON array with this exact structure:
   {
     "nama_menu": "Food name in Indonesian",
     "estimasi_gram": number,
-    "deskripsi": "Brief description of the food item",
-    "proses_pengolahan": "Brief description of how the food appears to be prepared"
+    "deskripsi": "description of the food item, make it as detailed as possible with a maximum of 100 words",
+    "proses_pengolahan": "description of how the food appears to be prepared, make it as detailed as possible with a maximum of 100 words"
   }
 ]
 
@@ -99,7 +97,8 @@ Important:
 - Be accurate with portion size estimates
 - Use Indonesian names for food items
 - Include all visible food items
-- Return only the JSON array, no other text`;
+- Return only the JSON array, no other text
+- all of content must be in bahasa Indonesia`;
 
   try {
     const imageResponse = await fetch(imageUrl);
@@ -157,7 +156,7 @@ Output format: Return ONLY a valid JSON object with this exact structure:
   },
   "items": [
     {
-      "name": "Food name in English",
+      "name": "Food name in Indonesian Language",
       "grams": number,
       "calories_kcal": number,
       "protein_g": number,
@@ -174,7 +173,8 @@ Important:
 - Convert Indonesian food names to English for the items array
 - Ensure all numbers are realistic and properly calculated
 - The summary should be the sum of all individual items
-- Return only the JSON object, no other text`;
+- Return only the JSON object, no other text
+- all of content must be in bahasa Indonesia`;
 
   try {
     const result = await model.generateContent(prompt);

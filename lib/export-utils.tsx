@@ -1,5 +1,5 @@
 import domtoimage from 'dom-to-image';
-import type { NutritionScan } from './types';
+import type { NutritionScan } from '../types/types';
 
 export async function exportHistoryToExcel(scans: NutritionScan[]) {
   if (scans.length === 0) return;

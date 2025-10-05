@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { User as SupabaseUser } from '@supabase/supabase-js';
 import { History, LogOut, Scan, Sparkles, User } from 'lucide-react';
+import type { NutritionScan } from '@/types/types';
 import { createClient } from '@/lib/supabase/client';
-import type { NutritionScan } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ImageUpload } from './image-upload';
@@ -107,7 +107,7 @@ export function DashboardContent({ user }: DashboardContentProps) {
           <div className="max-w-4xl mx-auto  min-h-full">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-foreground mb-4">
-                Analisis Gizi & kelayakan Menu MBG biar ga pada keracunan
+                Analisis Gizi Menu MBG
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 Unggah foto menu untuk mendapatkan analisis nutrisi terperinci
@@ -124,7 +124,7 @@ export function DashboardContent({ user }: DashboardContentProps) {
             </div>
 
             {error && (
-              <Card className="border-destructive/20 bg-destructive/5">
+              <Card className="border-destructive/20 bg-destructive/5 mt-10">
                 <CardContent className="p-4">
                   <p className="text-destructive text-center">{error}</p>
                   <div className="flex justify-center mt-4">

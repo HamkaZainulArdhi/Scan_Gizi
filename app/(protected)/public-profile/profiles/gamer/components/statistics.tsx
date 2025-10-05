@@ -22,7 +22,7 @@ const Statistics = ({ details }: IStatisticsProps) => {
         <div className="grid md:flex-1">
           <div className="flex justify-self-center items-center gap-3">
             <img
-              src={toAbsoluteUrl(`/media/brand-logos/${item.image}`)}
+              src={toAbsoluteUrl(`/media/svg/${item.image}`)}
               className="h-10 max-w-full"
               alt="image"
             />

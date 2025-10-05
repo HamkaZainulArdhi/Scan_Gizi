@@ -1,7 +1,7 @@
 // app/history/[id]/page.tsx
 import { notFound } from 'next/navigation';
+import type { NutritionScan } from '@/types/types';
 import { createClient } from '@/lib/supabase/server';
-import type { NutritionScan } from '@/lib/types';
 import { NutritionResults } from '../../analisis/components/nutrition-results';
 
 export default async function ScanDetailPage({

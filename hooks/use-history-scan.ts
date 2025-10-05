@@ -1,10 +1,9 @@
-// hooks/useHistoryScans.ts
 'use client';
 
 import { useEffect, useState } from 'react';
 import type { User as SupabaseUser } from '@supabase/supabase-js';
+import type { NutritionScan } from '@/types/types';
 import { createClient } from '@/lib/supabase/client';
-import type { NutritionScan } from '@/lib/types';
 
 type SortOrder = 'asc' | 'desc';
 
@@ -16,7 +15,7 @@ export function useHistoryScans(user: SupabaseUser) {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
   const [page, setPage] = useState(1);
-  const pageSize = 10;
+  const pageSize = 6;
 
   // tambahan
   const [isExporting, setIsExporting] = useState(false);

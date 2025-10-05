@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Calendar, CheckCircle, Edit3, Save, Scale, X } from 'lucide-react';
-import type { NutritionScan } from '@/lib/types';
+import type { NutritionScan } from '@/types/types';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -113,8 +113,8 @@ export function NutritionReview({
             Review & Edit Analysis
           </h2>
           <p className="text-muted-foreground">
-            Review the AI analysis and make any necessary corrections before
-            saving.
+            Tinjau analisis AI dan lakukan koreksi yang diperlukan sebelum
+            menyimpan.
           </p>
         </div>
         <div className="flex items-center space-x-2">
@@ -153,23 +153,25 @@ export function NutritionReview({
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Calendar className="w-5 h-5" />
-              Scan Information realtime
+              Informasi Analisis
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <p className="text-sm text-muted-foreground">Scan Date</p>
+              <p className="text-sm text-muted-foreground">Tanggal Scan</p>
               <p className="font-medium">{formatDate(scan_date)}</p>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Items Detected</p>
+              <p className="text-sm text-muted-foreground">
+                Makanan Terdeteksi
+              </p>
               <p className="font-medium">{menu_items.length} food items</p>
             </div>
             <div className="p-3 bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg">
               <div className="flex items-center gap-2 text-sm text-blue-700 dark:text-blue-300">
                 <CheckCircle className="w-4 h-4" />
                 <span>
-                  Click on any field below to edit the analysis results
+                  Klik data mana pun di bawah ini untuk mengedit hasil analisis
                 </span>
               </div>
             </div>
@@ -179,7 +181,7 @@ export function NutritionReview({
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-xl">Nutrition Summary</CardTitle>
+          <CardTitle className="text-xl">Nutrisi yang dihasilkan</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -193,13 +195,9 @@ export function NutritionReview({
                 value={Math.min(dailyValues.calories, 100)}
                 className="h-2"
               />
-              <Badge
-                variant="success"
-                appearance="outline"
-                className="text-xs text-muted-foreground mt-1"
-              >
-                {dailyValues.calories}% Daily Value
-              </Badge>
+              <div className="text-xs text-muted-foreground mt-1">
+                {dailyValues.calories}% Nilai Harian
+              </div>
             </div>
 
             {/* Protein */}
@@ -213,7 +211,7 @@ export function NutritionReview({
                 className="h-2"
               />
               <div className="text-xs text-muted-foreground mt-1">
-                {dailyValues.protein}% Daily Value
+                {dailyValues.protein}% Nilai Harian
               </div>
             </div>
 
@@ -228,7 +226,7 @@ export function NutritionReview({
                 className="h-2"
               />
               <div className="text-xs text-muted-foreground mt-1">
-                {dailyValues.fat}% Daily Value
+                {dailyValues.fat}% Nilai Harian
               </div>
             </div>
 
@@ -243,7 +241,7 @@ export function NutritionReview({
                 className="h-2"
               />
               <div className="text-xs text-muted-foreground mt-1">
-                {dailyValues.carbs}% Daily Value
+                {dailyValues.carbs}% Nilai Harian
               </div>
             </div>
 
@@ -258,7 +256,7 @@ export function NutritionReview({
                 className="h-2"
               />
               <div className="text-xs text-muted-foreground mt-1">
-                {dailyValues.sodium}% Daily Value
+                {dailyValues.sodium}% Nilai Harian
               </div>
             </div>
 
@@ -273,7 +271,7 @@ export function NutritionReview({
                 className="h-2"
               />
               <div className="text-xs text-muted-foreground mt-1">
-                {dailyValues.fiber}% Daily Value
+                {dailyValues.fiber}% Nilai Harian
               </div>
             </div>
           </div>
@@ -284,10 +282,10 @@ export function NutritionReview({
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Scale className="w-5 h-5" />
-            Detected Food Items
-            <Badge variant="secondary" className="ml-2">
+            Makanan Terdeteksi
+            <Badge variant="primary" className="ml-2">
               <Edit3 className="w-3 h-3 mr-1" />
-              Editable
+              Bisa Diedit
             </Badge>
           </CardTitle>
         </CardHeader>
@@ -305,7 +303,7 @@ export function NutritionReview({
                         htmlFor={`name-${index}`}
                         className="text-sm font-medium"
                       >
-                        Food Name
+                        Nama Makanan
                       </Label>
                       <Input
                         id={`name-${index}`}
@@ -321,7 +319,7 @@ export function NutritionReview({
                         htmlFor={`weight-${index}`}
                         className="text-sm font-medium"
                       >
-                        Estimated Weight (grams)
+                        Estimasi Berat (grams)
                       </Label>
                       <Input
                         id={`weight-${index}`}
@@ -343,7 +341,7 @@ export function NutritionReview({
                       htmlFor={`description-${index}`}
                       className="text-sm font-medium"
                     >
-                      Description
+                      Deskripsi
                     </Label>
                     <Textarea
                       id={`description-${index}`}
@@ -360,7 +358,7 @@ export function NutritionReview({
                       htmlFor={`preparation-${index}`}
                       className="text-sm font-medium"
                     >
-                      Preparation Method
+                      Proses Pengolahan
                     </Label>
                     <Input
                       id={`preparation-${index}`}
@@ -385,10 +383,10 @@ export function NutritionReview({
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            Detailed Nutrition Breakdown
-            <Badge variant="secondary" className="ml-2">
+            Detail Nutrisi Yang Terdeteksi
+            <Badge variant="primary" className="ml-2">
               <Edit3 className="w-3 h-3 mr-1" />
-              Editable
+              Bisa Diedit
             </Badge>
           </CardTitle>
         </CardHeader>

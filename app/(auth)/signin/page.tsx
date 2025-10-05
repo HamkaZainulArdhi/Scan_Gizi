@@ -64,7 +64,7 @@ export default function Page() {
         // Update context user so protected layout works
         await login(values.email, values.password);
         toast.success('You are now logged in.');
-        router.push('/');
+        router.push('/history');
       } else {
         setError('Invalid credentials. Please try again.');
       }

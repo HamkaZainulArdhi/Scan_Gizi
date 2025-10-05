@@ -9,12 +9,12 @@ import {
   Scale,
   Share2,
 } from 'lucide-react';
+import type { NutritionScan } from '@/types/types';
 import {
   exportHistoryToExcel,
   generateShareCard,
   shareNutritionScan,
 } from '@/lib/export-utils';
-import type { NutritionScan } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -104,7 +104,7 @@ export function NutritionResults({ scan }: NutritionResultsProps) {
   };
 
   return (
-    <div className="space-y-6 px-4 py-8">
+    <div className="space-y-6 px-4">
       <div className="grid lg:grid-cols-2 gap-6">
         <Card>
           <CardContent className="p-4">
@@ -120,21 +120,23 @@ export function NutritionResults({ scan }: NutritionResultsProps) {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Calendar className="w-5 h-5" />
-              Scan Information History
+              Informasi Riwayat Analisi
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <p className="text-sm text-muted-foreground">Scan Date</p>
+              <p className="text-sm text-muted-foreground">Tanggal Scan</p>
               <p className="font-medium">{formatDate(scan_date)}</p>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Items Detected</p>
+              <p className="text-sm text-muted-foreground">
+                Makanan Terdeteksi
+              </p>
               <p className="font-medium">{menu_items.length} food items</p>
             </div>
 
             <div className="flex flex-wrap gap-2 pt-2">
-              <Button
+              {/* <Button
                 onClick={handleShare}
                 variant="outline"
                 size="sm"
@@ -142,25 +144,37 @@ export function NutritionResults({ scan }: NutritionResultsProps) {
               >
                 <Share2 className="w-4 h-4 mr-2" />
                 Share
-              </Button>
-              <Button
+              </Button> */}
+              <Badge
                 onClick={handleExport}
-                variant="outline"
-                size="sm"
+                variant="success"
+                appearance="outline"
                 disabled={isExporting}
+                className="cursor-pointer h-7 hover:opacity-80 transition"
               >
-                <Download className="w-4 h-4 mr-2" />
+                <img
+                  src="/media/file-types/excel.svg"
+                  alt="Excel"
+                  className="w-4 h-4 mr-1"
+                />
                 {isExporting ? 'Exporting...' : 'Export Excel'}
-              </Button>
-              <Button
+              </Badge>
+              <Badge
                 onClick={handleShareCard}
-                variant="outline"
-                size="sm"
+                variant="warning"
+                appearance="outline"
                 disabled={isGeneratingCard}
+                className="cursor-pointer h-7 hover:opacity-80 transition"
               >
-                <ImageIcon className="w-4 h-4 mr-2" />
+                {/* <ImageIcon className="w-4 h-4 mr-2" /> */}
+                <img
+                  src="/media/file-types/svg.svg"
+                  alt="images"
+                  className="w-4 h-4 mr-1 "
+                />
+
                 {isGeneratingCard ? 'Generating...' : 'Share Card'}
-              </Button>
+              </Badge>
             </div>
 
             {shareStatus && (
@@ -175,7 +189,7 @@ export function NutritionResults({ scan }: NutritionResultsProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-xl">Nutrition Summary</CardTitle>
+          <CardTitle className="text-xl">Nutrisi yang dihasilkan</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -190,7 +204,7 @@ export function NutritionResults({ scan }: NutritionResultsProps) {
                 className="h-2"
               />
               <div className="text-xs text-muted-foreground mt-1">
-                {dailyValues.calories}% Daily Value
+                {dailyValues.calories}% Nilai Harian
               </div>
             </div>
 
@@ -205,7 +219,7 @@ export function NutritionResults({ scan }: NutritionResultsProps) {
                 className="h-2"
               />
               <div className="text-xs text-muted-foreground mt-1">
-                {dailyValues.protein}% Daily Value
+                {dailyValues.protein}% Nilai Harian
               </div>
             </div>
 
@@ -220,7 +234,7 @@ export function NutritionResults({ scan }: NutritionResultsProps) {
                 className="h-2"
               />
               <div className="text-xs text-muted-foreground mt-1">
-                {dailyValues.fat}% Daily Value
+                {dailyValues.fat}% Nilai Harian
               </div>
             </div>
 
@@ -235,7 +249,7 @@ export function NutritionResults({ scan }: NutritionResultsProps) {
                 className="h-2"
               />
               <div className="text-xs text-muted-foreground mt-1">
-                {dailyValues.carbs}% Daily Value
+                {dailyValues.carbs}% Nilai Harian
               </div>
             </div>
 
@@ -250,7 +264,7 @@ export function NutritionResults({ scan }: NutritionResultsProps) {
                 className="h-2"
               />
               <div className="text-xs text-muted-foreground mt-1">
-                {dailyValues.sodium}% Daily Value
+                {dailyValues.sodium}% Nilai Harian
               </div>
             </div>
 
@@ -265,7 +279,7 @@ export function NutritionResults({ scan }: NutritionResultsProps) {
                 className="h-2"
               />
               <div className="text-xs text-muted-foreground mt-1">
-                {dailyValues.fiber}% Daily Value
+                {dailyValues.fiber}% Nilai Harian
               </div>
             </div>
           </div>
@@ -276,7 +290,7 @@ export function NutritionResults({ scan }: NutritionResultsProps) {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Scale className="w-5 h-5" />
-            Detected Food Items
+            Makanan Terdeteksi
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -286,7 +300,11 @@ export function NutritionResults({ scan }: NutritionResultsProps) {
                 <div className="flex items-start justify-between mb-2">
                   <div>
                     <h3 className="font-semibold text-lg">{item.nama_menu}</h3>
-                    <Badge variant="secondary" className="mt-1">
+                    <Badge
+                      variant="success"
+                      appearance="outline"
+                      className="mt-1"
+                    >
                       {item.estimasi_gram}g
                     </Badge>
                   </div>

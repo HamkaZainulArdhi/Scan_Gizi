@@ -57,7 +57,7 @@ import { type MenuConfig } from './types';
 export const MENU_SIDEBAR: MenuConfig = [
   {
     title: 'Dashboard',
-    path: '/',
+    path: '/public-profile/profiles/gamer',
   },
   {
     title: 'Analisis',

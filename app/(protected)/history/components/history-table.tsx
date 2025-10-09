@@ -7,11 +7,7 @@ import type { User as SupabaseUser } from '@supabase/supabase-js';
 import {
   ArrowUpDown,
   Calendar,
-  Download,
   Eye,
-  File,
-  FileText,
-  HelpCircle,
   ImageIcon,
   MoreHorizontal,
   Search,
@@ -103,9 +99,9 @@ export function HistoryTable({ user }: HistoryTableProps) {
       link.download = `nutrition-card-${new Date(scan.scan_date).toISOString().split('T')[0]}.png`;
       link.click();
       URL.revokeObjectURL(cardUrl);
-      toast.success('Nutrition card downloaded!');
+      toast.success('Gambar kartu diunduh!');
     } catch {
-      toast.error('Card generation failed');
+      toast.error('Gagal mengunduh gambar kartu');
     }
   };
 
@@ -114,9 +110,9 @@ export function HistoryTable({ user }: HistoryTableProps) {
     setIsExporting(true);
     try {
       await exportHistoryToExcel();
-      toast.success('Excel file downloaded!');
+      toast.success('File Excel berhasil diunduh!');
     } catch {
-      toast.error('Export failed');
+      toast.error('Gagal mengekspor data ke Excel');
     } finally {
       setIsExporting(false);
     }
@@ -141,14 +137,14 @@ export function HistoryTable({ user }: HistoryTableProps) {
         <DropdownMenuContent align="end">
           <DropdownMenuItem onClick={() => handleShareCard(scan)}>
             <ImageIcon className="w-4 h-4 mr-2" />
-            Share Card
+            Design
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => deleteScan(scan.id)}
             className="text-destructive"
           >
             <Trash2 className="w-4 h-4 mr-2" />
-            Delete
+            Hapus
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -180,7 +176,7 @@ export function HistoryTable({ user }: HistoryTableProps) {
         {Math.round(protein)}g protein
       </Badge>
       <Badge variant="outline" className="text-xs">
-        {itemCount} items
+        {itemCount} item
       </Badge>
     </div>
   );
@@ -210,7 +206,7 @@ export function HistoryTable({ user }: HistoryTableProps) {
               <CardContent className="p-6 text-center">
                 <p className="text-destructive mb-4">{error}</p>
                 <Button variant="outline" onClick={fetchScans}>
-                  Try Again
+                  Coba Lagi
                 </Button>
               </CardContent>
             </Card>
@@ -221,14 +217,14 @@ export function HistoryTable({ user }: HistoryTableProps) {
                 <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
                   <Calendar className="w-8 h-8 text-muted-foreground" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">No scans yet</h3>
+                <h3 className="text-lg font-semibold mb-2">Tidak ada data</h3>
                 <p className="text-muted-foreground mb-6">
-                  Start by uploading your first food image.
+                  Anda belum melakukan scan makanan apapun.
                 </p>
-                <Link href="/dashboard">
+                <Link href="/analisis">
                   <Button>
                     <Sparkles className="w-4 h-4 mr-2" />
-                    Start Your First Scan
+                    Mulai Scan Pertama Anda
                   </Button>
                 </Link>
               </CardContent>
@@ -239,12 +235,12 @@ export function HistoryTable({ user }: HistoryTableProps) {
             <Card>
               <CardHeader>
                 <div className="w-full flex flex-col gap-4 py-5">
-                  <CardTitle>Nutrition Scan History</CardTitle>
+                  <CardTitle>Riwayat Scan Menu</CardTitle>
                   <div className="flex flex-col sm:flex-row sm:justify-between gap-4">
                     <div className="relative flex-1 sm:max-w-sm">
                       <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
                       <Input
-                        placeholder="Search by food items..."
+                        placeholder="Cari menu ..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="ps-9 w-71 h-8"
@@ -260,9 +256,7 @@ export function HistoryTable({ user }: HistoryTableProps) {
                       >
                         <ArrowUpDown className="w-4 h-4 mr-2" />
                         <span className="hidden sm:inline">
-                          {sortOrder === 'desc'
-                            ? 'Latest First'
-                            : 'Oldest First'}
+                          {sortOrder === 'desc' ? 'Terbaru' : 'Terlama'}
                         </span>
                         <span className="sm:hidden">Sort</span>
                       </Button>
@@ -279,7 +273,7 @@ export function HistoryTable({ user }: HistoryTableProps) {
                           className="w-4 h-4"
                         />
                         <span className="hidden sm:inline">
-                          {isExporting ? 'Exporting...' : 'Export to Excel'}
+                          {isExporting ? 'Exporting...' : 'Export ke Excel'}
                         </span>
                         <span className="sm:hidden">Export</span>
                       </Badge>
@@ -294,13 +288,13 @@ export function HistoryTable({ user }: HistoryTableProps) {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead>Image</TableHead>
-                        <TableHead>Date & Time</TableHead>
-                        <TableHead>Food Items</TableHead>
-                        <TableHead>Calories</TableHead>
+                        <TableHead>Foto</TableHead>
+                        <TableHead>Tanggal Scan</TableHead>
+                        <TableHead>Menu</TableHead>
+                        <TableHead>Kalori</TableHead>
                         <TableHead>Protein</TableHead>
-                        <TableHead>Items</TableHead>
-                        <TableHead className="text-right">Actions</TableHead>
+                        <TableHead>item Menu</TableHead>
+                        <TableHead>Aksi</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -386,14 +380,14 @@ export function HistoryTable({ user }: HistoryTableProps) {
                 {filteredScans.length === 0 && searchQuery && (
                   <div className="text-center py-8">
                     <p className="text-muted-foreground">
-                      No scans found for "{searchQuery}"
+                      Tidak ada hasil pencarian untuk "{searchQuery}"
                     </p>
                     <Button
                       variant="outline"
                       className="mt-2"
                       onClick={() => setSearchQuery('')}
                     >
-                      Clear Search
+                      Reset Pencarian
                     </Button>
                   </div>
                 )}
@@ -401,7 +395,8 @@ export function HistoryTable({ user }: HistoryTableProps) {
                 {/* Pagination */}
                 <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-6">
                   <span className="text-sm text-muted-foreground">
-                    Page {page} of {Math.ceil(filteredScans.length / pageSize)}
+                    Halaman {page} dari{' '}
+                    {Math.ceil(filteredScans.length / pageSize)}
                   </span>
                   <div className="flex gap-2">
                     <Button
@@ -409,14 +404,14 @@ export function HistoryTable({ user }: HistoryTableProps) {
                       disabled={page === 1}
                       onClick={() => setPage(page - 1)}
                     >
-                      Previous
+                      Sebelumnya
                     </Button>
                     <Button
                       variant="outline"
                       disabled={page * pageSize >= filteredScans.length}
                       onClick={() => setPage(page + 1)}
                     >
-                      Next
+                      Berikutnya
                     </Button>
                   </div>
                 </div>

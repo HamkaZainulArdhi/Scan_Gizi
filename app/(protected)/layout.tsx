@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from '@/providers/auth-provider';
+import { ProfileProvider } from '@/providers/profile-provider';
 import { ScreenLoader } from '@/components/common/screen-loader';
 import { Demo8Layout } from '../components/layouts/demo8/layout';
 
@@ -24,5 +25,9 @@ export default function ProtectedLayout({
     return <ScreenLoader />;
   }
 
-  return session ? <Demo8Layout>{children}</Demo8Layout> : null;
+  return session ? (
+    <ProfileProvider>
+      <Demo8Layout>{children}</Demo8Layout>
+    </ProfileProvider>
+  ) : null;
 }

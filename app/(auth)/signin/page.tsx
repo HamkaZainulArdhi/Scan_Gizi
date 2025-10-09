@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { RiErrorWarningFill } from '@remixicon/react';
 import { AlertCircle, Eye, EyeOff, LoaderCircleIcon } from 'lucide-react';
-import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { createClient } from '@/lib/supabase/client';
@@ -24,7 +23,6 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Icons } from '@/components/common/icons';
 import { getSigninSchema, SigninSchemaType } from '../forms/signin-schema';
 
 export default function Page() {

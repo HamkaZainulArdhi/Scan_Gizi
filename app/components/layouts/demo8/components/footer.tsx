@@ -1,6 +1,5 @@
 'use client';
 
-import { generalSettings } from '@/config/general.config';
 import { Container } from '@/components/common/container';
 
 export function Footer() {

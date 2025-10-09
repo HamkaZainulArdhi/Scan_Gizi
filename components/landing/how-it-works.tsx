@@ -1,18 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
-import {
-  Cable,
-  Camera,
-  ChartBar,
-  ChartNoAxesCombined,
-  CloudUpload,
-  Cog,
-  Download,
-  Edit,
-} from 'lucide-react';
+import { Camera, ChartBar, Download, Edit } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 import { CustomBadge } from '@/components/custom/badge';
 import { CustomSubtitle } from '@/components/custom/subtitle';
 import { CustomTitle } from '@/components/custom/title';

@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
-import { HistoryTable } from './components/history-table';
+import { ProfileContent } from './content';
 
 export default async function HistoryPage() {
   const supabase = await createClient();
@@ -14,5 +14,5 @@ export default async function HistoryPage() {
     redirect('/signin');
   }
 
-  return <HistoryTable user={user} />;
+  return <ProfileContent user={user} />;
 }

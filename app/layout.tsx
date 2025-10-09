@@ -8,7 +8,6 @@ import '@/css/styles.css';
 import '@/components/keenicons/assets/styles.css';
 import { Metadata } from 'next';
 import { AuthProvider } from '@/providers/auth-provider';
-import { ProfileProvider } from '@/providers/profile-provider';
 import { QueryProvider } from '@/providers/query-provider';
 import { ThemeProvider } from '@/providers/theme-provider';
 
@@ -39,10 +38,8 @@ export default async function RootLayout({
             <SettingsProvider>
               <ThemeProvider>
                 <TooltipsProvider>
-                  <ProfileProvider>
-                    <Suspense>{children}</Suspense>
-                    <Toaster />
-                  </ProfileProvider>
+                  <Suspense>{children}</Suspense>
+                  <Toaster />
                 </TooltipsProvider>
               </ThemeProvider>
             </SettingsProvider>

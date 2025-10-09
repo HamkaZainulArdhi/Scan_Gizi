@@ -10,7 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Switch } from '@/components/ui/switch';
 
 // Hardcoded dummy data for the earnings chart
 const dummyChartData: number[] = [
@@ -118,13 +117,6 @@ const EarningsChart = () => {
         const number = parseInt(series[seriesIndex][dataPointIndex]) * 10;
         const month = w.globals.seriesX[seriesIndex][dataPointIndex];
         const monthName = categories[month];
-
-        const formatter = new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: 'IDR',
-        });
-
-        const formattedNumber = formatter.format(number);
 
         return `
           <div class="flex flex-col gap-2 p-3.5">

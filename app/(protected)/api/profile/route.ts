@@ -3,9 +3,24 @@ import { createClient } from '@/lib/supabase/server';
 export async function GET() {
   const supabase = await createClient();
 
-  const { data, error } = await supabase.from('profiles').select('*, sppg(*)');
+  // Get authenticated user
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+  if (authError || !user) {
+    return Response.json(
+      { success: false, error: 'Unauthorized' },
+      { status: 401 },
+    );
+  }
 
-  console.log('Data from /api/profile:', data);
+  // Get profile data for authenticated user
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('*, sppg(*)')
+    .eq('id_user', user.id)
+    .maybeSingle();
 
   if (error) {
     console.error('[API ERROR]', error);
@@ -18,15 +33,20 @@ export async function GET() {
 export async function PUT(req: Request) {
   const supabase = await createClient();
   try {
-    const body = await req.json();
-    const { sppg, avatarFileBase64, ...profileData } = body;
-
-    if (!profileData.id_user) {
+    // Get authenticated user
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
+    if (authError || !user) {
       return Response.json(
-        { success: false, error: 'id_user wajib dikirim' },
-        { status: 400 },
+        { success: false, error: 'Unauthorized' },
+        { status: 401 },
       );
     }
+
+    const body = await req.json();
+    const { sppg, avatarFileBase64, ...profileData } = body;
 
     // Upload avatar jika ada
     let avatarUrl = profileData.avatar_url;
@@ -80,24 +100,29 @@ export async function PUT(req: Request) {
       }
     }
 
-    // Update profile
-    const { error: profileError } = await supabase
+    // Try to update existing profile first
+    const { data: updatedProfile, error: updateError } = await supabase
       .from('profiles')
-      .update({
+      .upsert({
+        id_user: user.id, // Always use authenticated user's ID
         ...profileData,
         avatar_url: avatarUrl,
         sppg_id: sppgId || null,
       })
-      .eq('id_user', profileData.id_user);
+      .select('*, sppg(*)')
+      .single();
 
-    if (profileError)
+    if (updateError) {
+      console.error('Profile update error:', updateError);
       return Response.json(
-        { success: false, error: profileError.message },
+        { success: false, error: updateError.message },
         { status: 500 },
       );
+    }
 
-    return Response.json({ success: true });
+    return Response.json({ success: true, data: updatedProfile });
   } catch (e) {
+    console.error('API error:', e);
     return Response.json(
       { success: false, error: (e as Error).message },
       { status: 500 },

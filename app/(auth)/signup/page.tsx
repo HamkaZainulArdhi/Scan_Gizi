@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   AlertCircle,
@@ -28,7 +27,6 @@ import { Input } from '@/components/ui/input';
 import { getSignupSchema, SignupSchemaType } from '../forms/signup-schema';
 
 export default function SignUpPage() {
-  const router = useRouter();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [passwordConfirmationVisible, setPasswordConfirmationVisible] =
     useState(false);

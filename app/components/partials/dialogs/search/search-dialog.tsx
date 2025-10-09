@@ -8,7 +8,6 @@ import {
   LayoutGrid,
   Search,
   TicketCheck,
-  Wallet,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import {

@@ -11,12 +11,19 @@ type ProfileContextType = {
 
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const fetcher = async (url: string) => {
+  const res = await fetch(url);
+  const data = await res.json();
+  if (!data.success) {
+    throw new Error(data.error || 'Failed to fetch profile');
+  }
+  return data;
+};
 
 export function ProfileProvider({ children }: { children: React.ReactNode }) {
   const { data, error, isLoading } = useSWRImmutable('/api/profile', fetcher);
 
-  const profile = data?.data?.[0] ?? null;
+  const profile = data?.data ?? null; // Remove array access since it's a single object
 
   return (
     <ProfileContext.Provider value={{ profile, isLoading, error }}>

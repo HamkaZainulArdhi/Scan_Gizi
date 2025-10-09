@@ -3,7 +3,6 @@
 import { Camera, Circle, RotateCcw, X } from 'lucide-react';
 import type { UseCameraReturn } from '@/hooks/use-camera';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 
 interface CameraCaptureProps {
   camera: UseCameraReturn;

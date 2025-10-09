@@ -1,13 +1,6 @@
 'use client';
 
-import {
-  BarChart3,
-  File,
-  FileText,
-  Flame,
-  HelpCircle,
-  Utensils,
-} from 'lucide-react';
+import { File, FileText, HelpCircle } from 'lucide-react';
 import { NutritionScan } from '@/types/types';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -15,21 +8,21 @@ import { Card, CardContent } from '@/components/ui/card';
 const STATS_CONFIG = [
   {
     key: 'scans',
-    label: 'Total Scans',
+    label: 'Total Scan Menu',
     color: 'text-primary',
     Background: 'bg-gradient-to-r from-blue-500 to-blue-600',
     icon: <FileText className="w-6 h-6" />,
   },
   {
     key: 'calories',
-    label: 'Total Calories Tracked',
+    label: 'Total Kalori Terdeteksi',
     color: 'text-chart-1',
     Background: 'bg-gradient-to-r from-green-500 to-green-600',
     icon: <HelpCircle className="w-6 h-6" />,
   },
   {
     key: 'items',
-    label: 'Food Items Analyzed',
+    label: 'Jenis menu terdeteksi',
     color: 'text-chart-2',
     Background: 'bg-gradient-to-r from-yellow-500 to-orange-500',
     icon: <File className="w-6 h-6" />,

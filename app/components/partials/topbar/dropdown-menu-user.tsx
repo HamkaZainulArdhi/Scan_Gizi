@@ -94,10 +94,7 @@ export function DropdownMenuUser({ trigger }: { trigger: ReactNode }) {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link
-            href="/account/home/user-profile"
-            className="flex items-center gap-2"
-          >
+          <Link href="/user-profile" className="flex items-center gap-2">
             <User />
             My Profile
           </Link>
@@ -120,10 +117,7 @@ export function DropdownMenuUser({ trigger }: { trigger: ReactNode }) {
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link
-                href="/account/home/user-profile"
-                className="flex items-center gap-2"
-              >
+              <Link href="/user-profile" className="flex items-center gap-2">
                 <FileText />
                 My Profile
               </Link>

@@ -1,5 +1,4 @@
 'use client';
-'use client';
 
 import { Fragment } from 'react';
 import Link from 'next/link';
@@ -8,11 +7,7 @@ import {
   BarChart,
   ChevronDown,
   Database,
-  FileText,
-  Lock,
   Share2,
-  Star,
-  Users,
   type LucideIcon,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';

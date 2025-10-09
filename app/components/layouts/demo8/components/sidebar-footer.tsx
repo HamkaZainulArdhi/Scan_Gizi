@@ -3,14 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ChatSheet } from '@/partials/topbar/chat-sheet';
-import {
-  BotMessageSquare,
-  LayoutGrid,
-  LogOut,
-  MessageCircleMore,
-  UserRoundCog,
-} from 'lucide-react';
-import { toAbsoluteUrl } from '@/lib/helpers';
+import { BotMessageSquare, LogOut, UserRoundCog } from 'lucide-react';
 import { useAuth } from '@/providers/auth-provider';
 import { Button } from '@/components/ui/button';
 
@@ -38,7 +31,7 @@ export function SidebarFooter() {
         />
       </div>
       <div className="flex flex-col gap-1.5">
-        <Link href="/account/home/user-profile">
+        <Link href="/user-profile">
           <Button
             variant="ghost"
             mode="icon"

@@ -3,9 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { User as SupabaseUser } from '@supabase/supabase-js';
-import { History, LogOut, Scan, Sparkles, User } from 'lucide-react';
+import { History, Scan } from 'lucide-react';
 import type { NutritionScan } from '@/types/types';
-import { createClient } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ImageUpload } from './image-upload';
@@ -94,11 +93,11 @@ export function DashboardContent({ user }: DashboardContentProps) {
     setError(null);
   };
 
-  const handleLogout = async () => {
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    router.push('/');
-  };
+  // const handleLogout = async () => {
+  //   const supabase = createClient();
+  //   await supabase.auth.signOut();
+  //   router.push('/');
+  // };
 
   return (
     <div className="bg-background h-[500px] ">

@@ -1,21 +1,10 @@
 'use client';
 
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { SearchDialog } from '@/partials/dialogs/search/search-dialog';
-import { ChatSheet } from '@/partials/topbar/chat-sheet';
-import {
-  Download,
-  MessageCircleMore,
-  Moon,
-  Search,
-  Sun,
-  UserRound,
-} from 'lucide-react';
+import { Moon, Search, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import useSWR from 'swr';
-import { Database } from '@/types/database';
 import { toAbsoluteUrl } from '@/lib/helpers';
 import { useBodyClass } from '@/hooks/use-body-class';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -31,7 +20,7 @@ export function Demo8Layout({ children }: { children: ReactNode }) {
   const isMobile = useIsMobile();
   const { setOption } = useSettings();
   const { theme, setTheme } = useTheme();
-  const { profile, isLoading } = useProfile();
+  const { profile } = useProfile();
 
   useBodyClass(`
     [--header-height:60px]
@@ -90,7 +79,7 @@ export function Demo8Layout({ children }: { children: ReactNode }) {
                       <div className="flex items-center gap-2">
                         <div className="flex flex-col">
                           <Link
-                            href="/account/home/user-profile"
+                            href="/user-profile"
                             className="text-sm text-mono hover:text-primary font-semibold"
                           >
                             <img

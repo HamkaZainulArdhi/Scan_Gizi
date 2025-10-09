@@ -53,13 +53,21 @@ export function UserHero({ image, name, info }: UserHeroProps) {
       style={{
         backgroundImage:
           theme === 'dark'
-            ? `url('${toAbsoluteUrl('/media/images/2600x1200/bg-1-dark.png')}')`
-            : `url('${toAbsoluteUrl('/media/images/2600x1200/bg-1.png')}')`,
+            ? `url('${toAbsoluteUrl('/media/benner/bg-5-dark.png')}')`
+            : `url('${toAbsoluteUrl('/media/benner/bg-5.png')}')`,
       }}
     >
       <Container>
         <div className="flex flex-col items-center gap-2 lg:gap-3.5 py-4 lg:pt-5 lg:pb-10">
-          {image}
+          {typeof image === 'string' ? (
+            <img
+              src={image}
+              alt={name || 'User avatar'}
+              className="rounded-full border-3 hover:border-green-500 size-[100px] object-cover shrink-0"
+            />
+          ) : (
+            image
+          )}
           <div className="flex items-center gap-1.5">
             <div className="text-lg leading-5 font-semibold text-mono">
               {name}

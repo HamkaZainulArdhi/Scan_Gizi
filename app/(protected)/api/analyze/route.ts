@@ -1,11 +1,6 @@
 import type { NextRequest } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import type {
-  MenuItemDetection,
-  NutritionAnalysis,
-  NutritionScan,
-} from '@/types/types';
-import { createClient } from '@/lib/supabase/server';
+import type { MenuItemDetection, NutritionAnalysis } from '@/types/types';
 
 const googleApiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
 if (!googleApiKey) {

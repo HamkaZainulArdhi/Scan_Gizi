@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { BarChart3, Globe, Shield, Table, Users, Zap } from 'lucide-react';
+import { BarChart3, Globe,Table, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Card, CardContent } from '@/components/ui/card';
 import { CustomBadge } from '@/components/custom/badge';

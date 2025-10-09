@@ -1,14 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  Calendar,
-  CheckCircle,
-  Download,
-  ImageIcon,
-  Scale,
-  Share2,
-} from 'lucide-react';
+import { Calendar, CheckCircle, Scale } from 'lucide-react';
 import type { NutritionScan } from '@/types/types';
 import {
   exportHistoryToExcel,
@@ -16,7 +9,6 @@ import {
   shareNutritionScan,
 } from '@/lib/export-utils';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 
@@ -49,24 +41,6 @@ export function NutritionResults({ scan }: NutritionResultsProps) {
       hour: '2-digit',
       minute: '2-digit',
     });
-  };
-
-  const handleShare = async () => {
-    try {
-      const result = await shareNutritionScan(scan);
-      if (result === true) {
-        setShareStatus('Shared successfully!');
-      } else if (result === 'clipboard') {
-        setShareStatus('Copied to clipboard!');
-      } else {
-        setShareStatus('Share failed. Please try again.');
-      }
-
-      setTimeout(() => setShareStatus(null), 3000);
-    } catch (error) {
-      setShareStatus('Share failed. Please try again.');
-      setTimeout(() => setShareStatus(null), 3000);
-    }
   };
 
   const handleExport = async () => {

@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useState } from 'react';
-import { ImageIcon, Upload, X } from 'lucide-react';
+import { Upload, X } from 'lucide-react';
 import { useDropzone } from 'react-dropzone';
 import { createClient } from '@/lib/supabase/client';
 import { cn } from '@/lib/utils';

@@ -17,6 +17,7 @@ import {
 import { toast } from 'sonner';
 import type { NutritionScan } from '@/types/types';
 import { useHistoryScans } from '@/hooks/use-history-scan';
+import { useProfile } from '@/providers/profile-provider';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -38,6 +39,7 @@ import {
 } from '@/components/ui/table';
 import { ContentLoader } from '@/components/common/content-loader';
 import { NutritionResults } from '../../analisis/components/nutrition-results';
+import Nodata from './no-data';
 import Stats from './stats';
 
 interface HistoryTableProps {
@@ -68,6 +70,7 @@ export function HistoryTable({ user }: HistoryTableProps) {
   const [selectedScan] = useState<NutritionScan | null>(null);
   const [isExporting, setIsExporting] = useState(false);
   const router = useRouter();
+  const { profile } = useProfile();
 
   // Utils
   const formatDate = (dateString: string) =>
@@ -91,7 +94,7 @@ export function HistoryTable({ user }: HistoryTableProps) {
       const { generateShareCard } = await import('@/lib/export-utils');
       const scanWithUserName = {
         ...scan,
-        user_name: user.user_metadata?.full_name || user.email,
+        profile,
       };
       const cardUrl = await generateShareCard(scanWithUserName);
       const link = document.createElement('a');
@@ -126,7 +129,7 @@ export function HistoryTable({ user }: HistoryTableProps) {
         size="sm"
         onClick={() => router.push(`/history/${scan.id}`)}
       >
-        <Eye className="w-4 h-4 text-amber-600" />
+        <Eye className="w-4 h-4 text-amber-600 hover:opacity-60" />
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -211,25 +214,7 @@ export function HistoryTable({ user }: HistoryTableProps) {
               </CardContent>
             </Card>
           )}
-          {!isLoading && !error && scans.length === 0 && (
-            <Card>
-              <CardContent className="p-12 text-center">
-                <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Calendar className="w-8 h-8 text-muted-foreground" />
-                </div>
-                <h3 className="text-lg font-semibold mb-2">Tidak ada data</h3>
-                <p className="text-muted-foreground mb-6">
-                  Anda belum melakukan scan makanan apapun.
-                </p>
-                <Link href="/analisis">
-                  <Button>
-                    <Sparkles className="w-4 h-4 mr-2" />
-                    Mulai Scan Pertama Anda
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-          )}
+          {!isLoading && !error && scans.length === 0 && <Nodata />}
           {/* Main Content */}
           {!isLoading && !error && scans.length > 0 && (
             <Card>
@@ -318,7 +303,8 @@ export function HistoryTable({ user }: HistoryTableProps) {
                                 appearance="outline"
                                 size="md"
                               >
-                                {Math.round(calories)} kcal
+                                {Math.round(calories)}
+                                {'\u202F'}kcal
                               </Badge>
                             </TableCell>
                             <TableCell>

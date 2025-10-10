@@ -84,8 +84,7 @@ export default function SignUpPage() {
           <Check />
         </AlertIcon>
         <AlertTitle>
-          You have successfully signed up! Please check your email to verify
-          your account and then{' '}
+          Berhasil Mendaftar. Silahkan Cek Email Anda Untuk Verifikasi{' '}
           <Link
             href="/signin"
             className="text-primary hover:text-primary-darker"
@@ -106,7 +105,7 @@ export default function SignUpPage() {
       >
         <div className="space-y-1.5 pb-3">
           <h1 className="text-2xl font-semibold tracking-tight text-center">
-            Sign Up to Nutrition Scan
+            Daftar Akun <span className="text-primary font-bold">GiziKita</span>
           </h1>
         </div>
 
@@ -127,7 +126,7 @@ export default function SignUpPage() {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="Your name" {...field} />
+                <Input placeholder="Masukkan Username" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -142,7 +141,10 @@ export default function SignUpPage() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="Your email" {...field} />
+                <Input
+                  placeholder="Pastikan Menggunakan Email SPPG "
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -159,7 +161,7 @@ export default function SignUpPage() {
               <div className="relative">
                 <Input
                   type={passwordVisible ? 'text' : 'password'}
-                  placeholder="Your password"
+                  placeholder="Masukkan Password"
                   {...field}
                 />
                 <Button
@@ -190,11 +192,11 @@ export default function SignUpPage() {
           name="passwordConfirmation"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Confirm Password</FormLabel>
+              <FormLabel>Komfirmasi Password</FormLabel>
               <div className="relative">
                 <Input
                   type={passwordConfirmationVisible ? 'text' : 'password'}
-                  placeholder="Confirm your password"
+                  placeholder="Konfirmasi Password"
                   {...field}
                 />
                 <Button
@@ -241,14 +243,14 @@ export default function SignUpPage() {
                       htmlFor="accept"
                       className="text-sm leading-none text-muted-foreground"
                     >
-                      I agree to the
+                      Saya Menyetujui
                     </label>
                     <Link
                       href="/privacy-policy"
                       target="_blank"
                       className="-ms-0.5 text-sm font-semibold text-foreground hover:text-primary"
                     >
-                      Privacy Policy
+                      Kebijakan Privasi
                     </Link>
                   </div>
                 </FormControl>
@@ -263,17 +265,17 @@ export default function SignUpPage() {
             {isProcessing ? (
               <LoaderCircleIcon className="size-4 animate-spin" />
             ) : null}
-            Continue
+            Selanjutkan
           </Button>
         </div>
 
         <p className="text-sm text-muted-foreground text-center">
-          Already have an account?{' '}
+          Sudah punya akun?{' '}
           <Link
             href="/signin"
             className="text-sm font-semibold text-foreground hover:text-primary"
           >
-            Sign In
+            Login
           </Link>
         </p>
       </form>

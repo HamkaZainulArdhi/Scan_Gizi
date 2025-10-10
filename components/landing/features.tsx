@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
-import { BarChart3, Globe,Table, Zap } from 'lucide-react';
+import { BarChart3, Globe, Table, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Card, CardContent } from '@/components/ui/card';
 import { CustomBadge } from '@/components/custom/badge';
 import { CustomSubtitle } from '@/components/custom/subtitle';
 import { CustomTitle } from '@/components/custom/title';
 
-const Features = () => {
+const Fitur = () => {
   const features = [
     {
       id: 'Dashboard Analitik',
@@ -80,7 +80,7 @@ const Features = () => {
 
   return (
     <section
-      id="features"
+      id="fitur"
       className="py-24 bg-background border-b border-border/50"
     >
       <div className="container mx-auto px-6">
@@ -180,4 +180,4 @@ const Features = () => {
   );
 };
 
-export default Features;
+export default Fitur;

@@ -1,5 +1,7 @@
 // Type definitions for the nutrition scanning app
 
+import { Profile, Sppg } from './profil.type';
+
 export interface MenuItemDetection {
   nama_menu: string;
   estimasi_gram: number;
@@ -40,4 +42,5 @@ export interface NutritionScan {
   nutrition_facts: NutritionAnalysis;
   created_at: string;
   user_name?: string;
+  profile?: Profile & { sppg?: Sppg };
 }

@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import Nodata from '../../history/components/no-data';
 
 export function Menu() {
   const [scans, setScans] = useState<NutritionScan[]>([]);
@@ -19,9 +20,20 @@ export function Menu() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // 🔹 ambil user aktif dulu
+        const {
+          data: { user },
+          error: userError,
+        } = await supabase.auth.getUser();
+
+        if (userError) throw userError;
+        if (!user) throw new Error('User belum login');
+
+        // 🔹 ambil data nutrition_scans milik user ini aja
         const { data, error } = await supabase
           .from('nutrition_scans')
           .select('*')
+          .eq('user_id', user.id) // ⬅️ pakai user.id karena dari auth.uid
           .order('scan_date', { ascending: false });
 
         if (error) throw error;
@@ -62,6 +74,10 @@ export function Menu() {
         Loading...
       </p>
     );
+  }
+
+  if (!loading && scans.length === 0) {
+    return <Nodata />;
   }
 
   return (

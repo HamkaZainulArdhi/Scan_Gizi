@@ -11,6 +11,7 @@ import {
   SheetBody,
   SheetContent,
   SheetHeader,
+  SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { Container } from '@/components/common/container';
@@ -54,6 +55,7 @@ export function Header() {
             close={false}
           >
             <SheetHeader className="p-0 space-y-0" />
+            <SheetTitle className="sr-only">Sidebar Navigasi</SheetTitle>
             <SheetBody className="px-0 pt-5 flex flex-col grow">
               <SidebarMenu />
               <SidebarFooter />

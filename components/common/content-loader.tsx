@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 export function ContentLoader({ className }: { className?: string }) {
   return (
     <div
-      className={cn('flex items-center justify-center grow w-full', className)}
+      className={cn('flex items-center justify-center grow w-full ', className)}
     >
       <div className="flex flex-col items-center gap-2.5">
         <LoaderCircleIcon

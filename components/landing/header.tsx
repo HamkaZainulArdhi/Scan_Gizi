@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/drawer';
 
 const Header = () => {
-  const navItems = ['Home', 'Features'];
+  const navItems = ['Home', 'Fitur'];
 
   const { resolvedTheme, setTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -36,13 +36,7 @@ const Header = () => {
       }
 
       // Track active section based on scroll position
-      const sections = [
-        'features',
-        'how-it-works',
-        'pricing',
-        'faq',
-        'contact',
-      ];
+      const sections = ['fitur', 'how-it-works', 'pricing', 'faq', 'contact'];
       const scrollPosition = window.scrollY + 200;
       for (const section of sections) {
         const element = document.getElementById(section);
@@ -87,7 +81,7 @@ const Header = () => {
   const isActiveItem = (item: string) => {
     const sectionMap: { [key: string]: string } = {
       Home: 'home',
-      Features: 'features',
+      Fitur: 'fitur',
       Pricing: 'pricing',
       FAQ: 'faq',
       Contact: 'contact',

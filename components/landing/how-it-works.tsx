@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Camera, ChartBar, Download, Edit } from 'lucide-react';
+import { useTheme } from 'next-themes';
 import { cn } from '@/lib/utils';
 import { CustomBadge } from '@/components/custom/badge';
 import { CustomSubtitle } from '@/components/custom/subtitle';
@@ -18,32 +19,36 @@ const HowItWorks = () => {
       title: 'Upload atau Potret Menu',
       description:
         'Ambil foto atau unggah gambar menu makanan untuk mulai analisis gizi.',
-      image: '/screens/4.png',
-      icon: Camera, // lebih cocok untuk upload/potret
+      image: 'media/fitur/1.png',
+      imagedark: 'media/fitur/1-dark.png',
+      icon: Camera,
     },
     {
       id: 2,
       title: 'Analisis Gizi Otomatis',
       description:
         'AI langsung membaca kandungan gizi dari menu yang dipindai.',
-      image: '/screens/5.png',
-      icon: ChartBar, // ikon analisis/data
+      image: 'media/fitur/2.png',
+      imagedark: 'media/fitur/2-dark.png',
+      icon: ChartBar,
     },
     {
       id: 3,
       title: 'Validasi & Edit Manual',
       description:
         'Periksa, validasi, dan edit data agar sesuai dengan kondisi nyata.',
-      image: '/screens/3.png',
-      icon: Edit, // ikon edit/validasi
+      image: 'media/fitur/3.png',
+      imagedark: 'media/fitur/3-dark.png',
+      icon: Edit,
     },
     {
       id: 4,
       title: 'Simpan & Ekspor Hasil',
       description:
         'Simpan analisis, ekspor ke Excel, atau ubah menjadi desain siap bagikan.',
-      image: '/screens/4.png',
-      icon: Download, // ikon simpan/ekspor
+      image: 'media/fitur/4.png',
+      imagedark: 'media/fitur/4-dark.png',
+      icon: Download,
     },
   ];
 
@@ -162,18 +167,30 @@ const HowItWorks = () => {
 
           {/* Right Side - Fading Images */}
           <div className="relative w-full rounded-xl overflow-hidden border border-border shadow-xs shadow-black/5 bg-background">
-            <div className="max-h-[50vh] overflow-hidden">
+            <div className="max-h-[100vh] overflow-hidden">
               <AnimatePresence mode="wait">
-                <motion.img
+                <motion.div
                   key={activeStep}
-                  src={steps[activeStep].image}
-                  alt={`${steps[activeStep].title} visualization`}
-                  className="w-full h-full object-cover"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.5, ease: 'easeInOut' }}
-                />
+                  className="relative w-full h-full"
+                >
+                  {/* versi light */}
+                  <img
+                    src={steps[activeStep].image}
+                    alt={`${steps[activeStep].title} visualization`}
+                    className="w-full h-full object-cover block dark:hidden"
+                  />
+
+                  {/* versi dark */}
+                  <img
+                    src={steps[activeStep].imagedark}
+                    alt={`${steps[activeStep].title} visualization`}
+                    className="w-full h-full object-cover hidden dark:block"
+                  />
+                </motion.div>
               </AnimatePresence>
             </div>
           </div>

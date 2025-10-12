@@ -3,7 +3,7 @@ import {
   Toolbar,
   ToolbarActions,
   ToolbarHeading,
-} from '@/layouts/demo1/components/toolbar';
+} from '@/layouts/demo8/components/toolbar';
 import { addDays, format } from 'date-fns';
 import { CalendarDays } from 'lucide-react';
 import { DateRange } from 'react-day-picker';
@@ -42,10 +42,7 @@ export function Demo1LightSidebarPage() {
     <Fragment>
       <Container>
         <Toolbar>
-          <ToolbarHeading
-            title="Dashboard"
-            description="Central Hub for Personal Customization"
-          />
+          <ToolbarHeading title="Dashboard" />
           <ToolbarActions>
             <Popover open={isOpen} onOpenChange={setIsOpen}>
               <PopoverTrigger asChild>

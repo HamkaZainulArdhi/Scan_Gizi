@@ -58,7 +58,7 @@ export function UserHero({ image, name, info }: UserHeroProps) {
       }}
     >
       <Container>
-        <div className="flex flex-col items-center gap-2 lg:gap-3.5 py-4 lg:pt-5 lg:pb-10">
+        <div className="flex flex-col items-center  gap-2 lg:gap-3.5 py-4 lg:pt-5 lg:pb-10">
           {typeof image === 'string' ? (
             <img
               src={image}

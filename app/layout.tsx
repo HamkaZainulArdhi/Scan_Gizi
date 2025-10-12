@@ -15,8 +15,8 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: {
-    template: 'ScanGizi | Badan Gizi Nasional',
-    default: 'ScanGizi | Badan Gizi Nasional',
+    template: 'GiziKita | Satuan Pelayanan Pemenuhan Gizi',
+    default: 'GiziKita | Satuan Pelayanan Pemenuhan Gizi',
   },
 };
 

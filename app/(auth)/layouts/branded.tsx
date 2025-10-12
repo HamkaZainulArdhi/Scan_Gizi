@@ -20,7 +20,7 @@ export function BrandedLayout({ children }: { children: ReactNode }) {
       setIndex((prev) => (prev + 1) % messages.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [messages.length]);
 
   return (
     <>
@@ -43,7 +43,7 @@ export function BrandedLayout({ children }: { children: ReactNode }) {
           loop
           muted
           playsInline
-          src="media/benner/loginvideo.mp4"
+          src={toAbsoluteUrl('/media/benner/loginvideo.mp4')}
         />
         {/* overlay biar konten kebaca */}
         <div className="absolute inset-0 bg-black/30" />

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import type { User as SupabaseUser } from '@supabase/supabase-js';
 import type { NutritionScan } from '@/types/types';
 import { createClient } from '@/lib/supabase/client';
@@ -22,9 +22,27 @@ export function useHistoryScans(user: SupabaseUser) {
   const [actionStatus, setActionStatus] = useState<string | null>(null);
   const [selectedScan, setSelectedScan] = useState<NutritionScan | null>(null);
 
+  const fetchScans = useCallback(async () => {
+    try {
+      const supabase = createClient();
+      const { data, error } = await supabase
+        .from('nutrition_scans')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+
+      if (error) throw new Error(error.message);
+      setScans(data || []);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to load scans');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [user.id]); // depend on user.id
+
   useEffect(() => {
     fetchScans();
-  }, []);
+  }, [fetchScans]);
 
   useEffect(() => {
     let data = scans.filter((scan) => {
@@ -48,24 +66,6 @@ export function useHistoryScans(user: SupabaseUser) {
 
     setFilteredScans(data);
   }, [scans, searchQuery, sortOrder]);
-
-  const fetchScans = async () => {
-    try {
-      const supabase = createClient();
-      const { data, error } = await supabase
-        .from('nutrition_scans')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
-
-      if (error) throw new Error(error.message);
-      setScans(data || []);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load scans');
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const deleteScan = async (scanId: string) => {
     try {

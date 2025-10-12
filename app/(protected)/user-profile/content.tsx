@@ -31,16 +31,19 @@ export function PersonalInfo() {
   const { profile, isLoading, error } = useProfile();
 
   // Initialize empty form data or use existing profile
-  const [formData, setFormData] = useState<ProfileWithSppg>(() => ({
-    id_user: user?.id || '',
-    nama_lengkap: '',
-    avatar_url: null,
-    jabatan: null,
-    created_at: null,
-    sppg_id: null,
-    sppg: null,
-    ...profile,
-  }));
+  const [formData, setFormData] = useState<ProfileWithSppg>(
+    () =>
+      ({
+        id: profile?.id ?? null,
+        id_user: user?.id || '',
+        nama_lengkap: profile?.nama_lengkap ?? '',
+        avatar_url: profile?.avatar_url ?? null,
+        jabatan: profile?.jabatan ?? null,
+        created_at: profile?.created_at ?? null,
+        sppg_id: profile?.sppg_id ?? null,
+        sppg: profile?.sppg ?? null,
+      }) as ProfileWithSppg,
+  );
 
   // Initialize avatar state
   const [avatar, setAvatar] = useState<ImageInputFile[]>(() =>
@@ -57,8 +60,24 @@ export function PersonalInfo() {
       setFormData((prev) => ({
         ...prev,
         ...profile,
+        nama_lengkap: profile.nama_lengkap ?? '',
+        id_user: profile.id_user ?? '',
+        id: profile.id ?? null,
+        avatar_url: profile.avatar_url ?? null,
+        jabatan: profile.jabatan ?? null,
+        created_at: profile.created_at ?? null,
+        sppg_id: profile.sppg_id ?? null,
+        sppg: profile.sppg
+          ? {
+              id: profile.sppg.id,
+              nama: profile.sppg.nama ?? null,
+              wilayah: profile.sppg.wilayah ?? null,
+              alamat: profile.sppg.alamat ?? null,
+              kecamatan: profile.sppg.kecamatan ?? null,
+              created_at: profile.sppg.created_at ?? null,
+            }
+          : null,
       }));
-
       setAvatar(
         profile.avatar_url &&
           profile.avatar_url !== 'null' &&
@@ -93,13 +112,12 @@ export function PersonalInfo() {
         });
       }
 
-      // Don't send existing avatar_url, let backend handle it
-      const { avatar_url, id_user, ...rest } = formData;
+      const { ...rest } = formData;
       const payload = {
         ...rest,
         avatarFileBase64: avatarBase64,
         avatar_url: avatar.length === 0 ? null : undefined,
-        sppg: formData.sppg, // Include SPPG data for upsert
+        sppg: formData.sppg,
       };
 
       // Optimistic update with new data shape (single object)
@@ -197,21 +215,29 @@ export function PersonalInfo() {
               <p className="text-muted-foreground">Nama Lengkap</p>
               <p className="font-medium">{profile?.nama_lengkap || '—'}</p>
             </div>
+
+            <div>
+              <p className="text-muted-foreground">Cakupan Wilayah SPPG</p>
+              <p className="font-medium">{profile?.sppg?.wilayah || '—'}</p>
+            </div>
             <div>
               <p className="text-muted-foreground">Jabatan</p>
               <p className="font-medium">{profile?.jabatan || '—'}</p>
             </div>
             <div>
-              <p className="text-muted-foreground">Nama SPPG</p>
-              <p className="font-medium">{profile?.sppg?.nama || '—'}</p>
-            </div>
-            <div>
-              <p className="text-muted-foreground">Alamat SPPG</p>
+              <p className="text-muted-foreground">
+                Alamat SPPG (jalan, Kelurahaan)
+              </p>
               <p className="font-medium">{profile?.sppg?.alamat || '—'}</p>
             </div>
             <div>
-              <p className="text-muted-foreground">Cakupan Wilayah</p>
-              <p className="font-medium">{profile?.sppg?.wilayah || '—'}</p>
+              <p className="text-muted-foreground">Nama SPPG</p>
+              <p className="font-medium">{profile?.sppg?.nama || '—'}</p>
+            </div>
+
+            <div>
+              <p className="text-muted-foreground">Kecamatan SPPG</p>
+              <p className="font-medium">{profile?.sppg?.kecamatan || '—'}</p>
             </div>
           </CardContent>
         </Card>
@@ -266,6 +292,23 @@ export function PersonalInfo() {
                   setFormData({
                     ...formData,
                     sppg: { ...(formData.sppg! || {}), alamat: e.target.value },
+                  })
+                }
+              />
+            </div>
+            <div>
+              <label className="text-sm text-muted-foreground">
+                Kecamatan SPPG
+              </label>
+              <Input
+                value={formData.sppg?.kecamatan || ''}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    sppg: {
+                      ...(formData.sppg! || {}),
+                      kecamatan: e.target.value,
+                    },
                   })
                 }
               />

@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Camera, ChartBar, Download, Edit } from 'lucide-react';
-import { useTheme } from 'next-themes';
 import { cn } from '@/lib/utils';
 import { CustomBadge } from '@/components/custom/badge';
 import { CustomSubtitle } from '@/components/custom/subtitle';
@@ -100,7 +99,9 @@ const HowItWorks = () => {
         >
           <CustomBadge>Cara Kerja</CustomBadge>
 
-          <CustomTitle>Bagaimana Cara Kerja AI-nya?</CustomTitle>
+          <CustomTitle>
+            Bagaimana Cara Kerja <span className="text-primary">AI-nya</span>?
+          </CustomTitle>
 
           <CustomSubtitle>
             Mulai dari upload foto menu, AI menganalisis gizi, lalu hasilnya
@@ -126,7 +127,7 @@ const HowItWorks = () => {
                 )}
                 onClick={() => handleStepClick(index)}
               >
-                <div className="size-12 bg-primary/40 rounded-full flex items-center justify-center">
+                <div className="size-12 bg-primary/30 rounded-full flex items-center justify-center">
                   <step.icon className="size-5 text-primary" />
                 </div>
 
@@ -153,7 +154,7 @@ const HowItWorks = () => {
                       >
                         {/* Progress Bar - moved to bottom */}
                         <motion.div
-                          className="h-0.5 bg-gradient-to-r from-primary to-cyan-700"
+                          className="h-0.5 bg-gradient-to-r from-primary to-amber-300"
                           style={{ width: `${progress}%` }}
                           transition={{ duration: 0.05, ease: 'linear' }}
                         />
@@ -195,16 +196,6 @@ const HowItWorks = () => {
             </div>
           </div>
         </motion.div>
-
-        {/* Bottom CTA */}
-        {/* <div className="text-center mt-16">
-          <p className="text-muted-foreground mb-4">
-            Ready to get started? It takes less than 5 minutes.
-          </p>
-          <Button size="lg" asChild>
-            <Link href="#cta">Start Your Journey</Link>
-          </Button>
-        </div> */}
       </div>
     </section>
   );

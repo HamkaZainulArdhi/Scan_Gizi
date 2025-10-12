@@ -1,12 +1,11 @@
 'use client';
 
-import { Fragment, useEffect, useState } from 'react';
-// pastikan path sesuai dengan tempat kamu simpan file client.ts
+import { Fragment } from 'react';
 import type { User as SupabaseUser } from '@supabase/supabase-js';
 import { Disc, MapPin } from 'lucide-react';
-import { createClient } from '@/lib/supabase/client';
 import { useHistoryScans } from '@/hooks/use-history-scan';
-import { ScreenLoader } from '@/components/common/screen-loader';
+import { useProfile } from '@/providers/profile-provider';
+import { ContentLoader } from '@/components/common/content-loader';
 import { EarningsChart } from '@/app/(protected)/components/demo1';
 import { UserHero } from '@/app/components/partials/common/user-hero';
 import Stats from '../history/components/stats';
@@ -16,58 +15,16 @@ interface HistoryTableProps {
   user: SupabaseUser;
 }
 
-interface ProfileData {
-  nama_lengkap: string | null;
-  avatar_url: string | null;
-  sppg: {
-    nama: string | null;
-    wilayah: string | null;
-    alamat: string | null;
-  } | null;
-}
-
 export function ProfileContent({ user }: HistoryTableProps) {
+  const { profile } = useProfile();
   const { scans } = useHistoryScans(user);
-  const [profile, setProfile] = useState<ProfileData | null>(null);
-  const supabase = createClient();
 
-  useEffect(() => {
-    if (!user) return;
-
-    const fetchProfile = async () => {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select(
-          `
-    nama_lengkap,
-    jabatan,
-    avatar_url,
-    sppg:sppg_id (
-      nama,
-      wilayah,
-      alamat
-    )
-  `,
-        )
-        .eq('id_user', user.id)
-        .single();
-
-      if (error) {
-        console.error('Gagal mengambil data profil:', error);
-      } else {
-        setProfile({
-          ...data,
-          sppg: Array.isArray(data.sppg)
-            ? data.sppg[0] || null
-            : (data.sppg ?? null),
-        });
-      }
-    };
-
-    fetchProfile();
-  }, [user]);
-
-  if (!profile) return <ScreenLoader />;
+  if (!profile)
+    return (
+      <div className="flex items-center justify-center min-h-[500px]">
+        <ContentLoader />
+      </div>
+    );
 
   return (
     <Fragment>
@@ -79,11 +36,14 @@ export function ProfileContent({ user }: HistoryTableProps) {
             label: profile.sppg?.alamat || 'Alamat belum diatur',
             icon: MapPin,
           },
-          { label: profile.sppg?.nama || 'Jabatan belum diisi', icon: Disc },
-          // {
-          //   label: profile.sppg?.wilayah || 'Wilayah belum diatur',
-          //   icon: ScanEye,
-          // },
+          {
+            label: profile.sppg?.kecamatan || 'Kecamatan belum diisi',
+            icon: MapPin,
+          },
+          {
+            label: profile.sppg?.nama || 'Jabatan belum diisi',
+            icon: Disc,
+          },
         ]}
       />
 

@@ -61,16 +61,16 @@ export default function Page() {
       if (!error) {
         // Update context user so protected layout works
         await login(values.email, values.password);
-        toast.success('You are now logged in.');
+        toast.success('Selamat. Anda Berhasil masuk');
         router.push('/history');
       } else {
-        setError('Invalid credentials. Please try again.');
+        setError('kredensial tidak valid. Silakan coba lagi.');
       }
     } catch (err) {
       setError(
         err instanceof Error
           ? err.message
-          : 'An unexpected error occurred. Please try again.',
+          : 'Terjadi kesalahan tak terduga. Silakan coba lagi.',
       );
     } finally {
       setIsProcessing(false);
@@ -85,7 +85,7 @@ export default function Page() {
       >
         <div className="space-y-1.5 pb-3">
           <h1 className="text-2xl font-semibold tracking-tight text-center">
-            Sign in to Metronic
+            Masuk Ke <span className="text-primary font-bold">GiziKita</span>
           </h1>
         </div>
 
@@ -94,10 +94,12 @@ export default function Page() {
             <RiErrorWarningFill className="text-primary" />
           </AlertIcon>
           <AlertTitle className="text-accent-foreground">
-            Use <span className="text-mono font-semibold">demo@kt.com</span>{' '}
-            username and{' '}
-            <span className="text-mono font-semibold">demo123</span> for demo
-            access.
+            Gunakan email{' '}
+            <span className="text-mono font-semibold">
+              hamkazainardhi@gmail.com
+            </span>{' '}
+            dan password <span className="text-mono font-semibold">123456</span>{' '}
+            Untuk demo akses
           </AlertTitle>
         </Alert>
 
@@ -105,8 +107,10 @@ export default function Page() {
           <div className="absolute inset-0 flex items-center">
             <span className="w-full border-t" />
           </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground">or</span>
+          <div className="relative flex justify-center text-xs ">
+            <span className="bg-background px-2 text-muted-foreground">
+              Atau
+            </span>
           </div>
         </div>
 
@@ -155,7 +159,7 @@ export default function Page() {
                   onClick={() => setPasswordVisible(!passwordVisible)} // Toggle visibility
                   className="absolute end-0 top-1/2 -translate-y-1/2 h-7 w-7 me-1.5 bg-transparent!"
                   aria-label={
-                    passwordVisible ? 'Hide password' : 'Show password'
+                    passwordVisible ? 'Sembunyikan password' : 'Lihat password'
                   }
                 >
                   {passwordVisible ? (
@@ -185,7 +189,7 @@ export default function Page() {
                   htmlFor="remember-me"
                   className="text-sm leading-none text-muted-foreground"
                 >
-                  Remember me
+                  Ingatkan Saya
                 </label>
               </>
             )}
@@ -197,17 +201,17 @@ export default function Page() {
             {isProcessing ? (
               <LoaderCircleIcon className="size-4 animate-spin" />
             ) : null}
-            Continue
+            Lanjutkan
           </Button>
         </div>
 
         <p className="text-sm text-muted-foreground text-center">
-          Don&apos;t have an account?{' '}
+          Belum Punya Akun?{' '}
           <Link
             href="/signup"
             className="text-sm font-semibold text-foreground hover:text-primary"
           >
-            Sign Up
+            Daftar
           </Link>
         </p>
       </form>

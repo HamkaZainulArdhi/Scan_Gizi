@@ -2,7 +2,7 @@
 
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { CheckCheck } from 'lucide-react';
+import { CheckCheck, User } from 'lucide-react';
 import { marked } from 'marked';
 import { toAbsoluteUrl } from '@/lib/helpers';
 import { cn } from '@/lib/utils';
@@ -36,7 +36,7 @@ interface Message {
 
 export function ChatSheet({ trigger }: { trigger: ReactNode }) {
   const [emailInput, setEmailInput] = useState('');
-  const avatar = toAbsoluteUrl('/media/BGN_LOGO.png');
+  const avatar = toAbsoluteUrl('/media/logo/logo.png');
   const [messages, setMessages] = useState<Message[]>([
     {
       avatar: avatar,
@@ -187,11 +187,9 @@ export function ChatSheet({ trigger }: { trigger: ReactNode }) {
                   </div>
                 </div>
                 <Avatar className="size-9">
-                  <AvatarImage
-                    src={toAbsoluteUrl('/media/avatars/300-2.png')}
-                    alt=""
-                  />
-                  <AvatarFallback>CH</AvatarFallback>
+                  <AvatarFallback>
+                    <User />
+                  </AvatarFallback>
                   <AvatarIndicator className="-end-2 -bottom-2">
                     <AvatarStatus variant="online" className="size-2.5" />
                   </AvatarIndicator>
@@ -223,11 +221,7 @@ export function ChatSheet({ trigger }: { trigger: ReactNode }) {
         {/* FOOTER */}
         <SheetFooter className="block p-0 sm:space-x-0 border-t border-border bg-background">
           <div className="p-5 flex items-center gap-2 relative">
-            <img
-              src={toAbsoluteUrl('/media/avatars/300-2.png')}
-              className="w-8 h-8 rounded-full absolute left-7 top-1/2 -translate-y-1/2"
-              alt=""
-            />
+            <User className="w-8 h-8 rounded-full absolute left-7 top-1/2 -translate-y-1/2" />
             <Input
               type="text"
               value={emailInput}

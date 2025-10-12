@@ -197,21 +197,29 @@ export function PersonalInfo() {
               <p className="text-muted-foreground">Nama Lengkap</p>
               <p className="font-medium">{profile?.nama_lengkap || '—'}</p>
             </div>
+
+            <div>
+              <p className="text-muted-foreground">Cakupan Wilayah SPPG</p>
+              <p className="font-medium">{profile?.sppg?.wilayah || '—'}</p>
+            </div>
             <div>
               <p className="text-muted-foreground">Jabatan</p>
               <p className="font-medium">{profile?.jabatan || '—'}</p>
             </div>
             <div>
-              <p className="text-muted-foreground">Nama SPPG</p>
-              <p className="font-medium">{profile?.sppg?.nama || '—'}</p>
-            </div>
-            <div>
-              <p className="text-muted-foreground">Alamat SPPG</p>
+              <p className="text-muted-foreground">
+                Alamat SPPG (jalan, Kelurahaan)
+              </p>
               <p className="font-medium">{profile?.sppg?.alamat || '—'}</p>
             </div>
             <div>
-              <p className="text-muted-foreground">Cakupan Wilayah</p>
-              <p className="font-medium">{profile?.sppg?.wilayah || '—'}</p>
+              <p className="text-muted-foreground">Nama SPPG</p>
+              <p className="font-medium">{profile?.sppg?.nama || '—'}</p>
+            </div>
+
+            <div>
+              <p className="text-muted-foreground">Kecamatan SPPG</p>
+              <p className="font-medium">{profile?.sppg?.kecamatan || '—'}</p>
             </div>
           </CardContent>
         </Card>
@@ -258,7 +266,7 @@ export function PersonalInfo() {
             </div>
             <div>
               <label className="text-sm text-muted-foreground">
-                Alamat SPPG
+                Alamat SPPG (jalan, Kelurahan)
               </label>
               <Input
                 value={formData.sppg?.alamat || ''}
@@ -266,6 +274,23 @@ export function PersonalInfo() {
                   setFormData({
                     ...formData,
                     sppg: { ...(formData.sppg! || {}), alamat: e.target.value },
+                  })
+                }
+              />
+            </div>
+            <div>
+              <label className="text-sm text-muted-foreground">
+                Kecamatan SPPG
+              </label>
+              <Input
+                value={formData.sppg?.kecamatan || ''}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    sppg: {
+                      ...(formData.sppg! || {}),
+                      kecamatan: e.target.value,
+                    },
                   })
                 }
               />

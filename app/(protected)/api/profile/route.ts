@@ -21,7 +21,7 @@ export async function GET() {
     .select('*, sppg(*)')
     .eq('id_user', user.id)
     .maybeSingle();
-
+  console.log('ambil dari provile undah:', data);
   if (error) {
     console.error('[API ERROR]', error);
     return Response.json({ success: false, error }, { status: 500 });

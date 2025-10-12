@@ -13,7 +13,7 @@ export function SidebarFooter() {
 
   const handleLogout = () => {
     logout();
-    router.push('/signin');
+    router.push('/');
   };
   return (
     <div className="flex flex-col gap-5 items-center shrink-0 pb-5">

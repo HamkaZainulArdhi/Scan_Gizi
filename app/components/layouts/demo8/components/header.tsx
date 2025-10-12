@@ -11,6 +11,7 @@ import {
   SheetBody,
   SheetContent,
   SheetHeader,
+  SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { Container } from '@/components/common/container';
@@ -31,13 +32,8 @@ export function Header() {
       <Container className="flex items-center justify-between flex-wrap gap-3">
         <Link href="/">
           <img
-            src={toAbsoluteUrl('/media/app/mini-logo-gray.svg')}
-            className="dark:hidden h-[30px]"
-            alt="image"
-          />
-          <img
-            src={toAbsoluteUrl('/media/app/mini-logo-gray-dark.svg')}
-            className="hidden dark:inline-block h-[30px]"
+            src={toAbsoluteUrl('/media/logo/logo.png')}
+            className="h-[30px]"
             alt="image"
           />
         </Link>
@@ -54,6 +50,7 @@ export function Header() {
             close={false}
           >
             <SheetHeader className="p-0 space-y-0" />
+            <SheetTitle className="sr-only">Sidebar Navigasi</SheetTitle>
             <SheetBody className="px-0 pt-5 flex flex-col grow">
               <SidebarMenu />
               <SidebarFooter />

@@ -9,12 +9,12 @@ export function SidebarHeader() {
     <div className="hidden lg:flex items-center justify-center shrink-0 pt-8 pb-3.5">
       <Link href="/">
         <Image
-          src={toAbsoluteUrl('/media/BGN_LOGO.png')}
+          src={toAbsoluteUrl('/media/logo/logo.png')}
           width={50}
           height={50}
           priority
           className="min-h-[20px]"
-          alt=""
+          alt="anjayyyy"
         />
       </Link>
     </div>

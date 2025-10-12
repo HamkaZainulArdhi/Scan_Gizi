@@ -3,11 +3,7 @@
 import { useState } from 'react';
 import { Calendar, CheckCircle, Scale } from 'lucide-react';
 import type { NutritionScan } from '@/types/types';
-import {
-  exportHistoryToExcel,
-  generateShareCard,
-  shareNutritionScan,
-} from '@/lib/export-utils';
+import { exportHistoryToExcel, generateShareCard } from '@/lib/export-utils';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -49,7 +45,7 @@ export function NutritionResults({ scan }: NutritionResultsProps) {
       await exportHistoryToExcel([scan]);
       setShareStatus('Excel file downloaded!');
       setTimeout(() => setShareStatus(null), 3000);
-    } catch (error) {
+    } catch {
       setShareStatus('Export failed. Please try again.');
       setTimeout(() => setShareStatus(null), 3000);
     } finally {
@@ -69,7 +65,7 @@ export function NutritionResults({ scan }: NutritionResultsProps) {
       URL.revokeObjectURL(cardUrl);
       setShareStatus('Nutrition card downloaded!');
       setTimeout(() => setShareStatus(null), 3000);
-    } catch (error) {
+    } catch {
       setShareStatus('Card generation failed. Please try again.');
       setTimeout(() => setShareStatus(null), 3000);
     } finally {

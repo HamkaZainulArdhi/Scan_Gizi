@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Camera, ChartBar, Download, Edit } from 'lucide-react';
-import { useTheme } from 'next-themes';
 import { cn } from '@/lib/utils';
 import { CustomBadge } from '@/components/custom/badge';
 import { CustomSubtitle } from '@/components/custom/subtitle';

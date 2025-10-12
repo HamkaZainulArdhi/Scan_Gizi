@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Instagram, Linkedin, MapPin, Phone } from 'lucide-react';
 import { toAbsoluteUrl } from '@/lib/helpers';

@@ -5,7 +5,6 @@ import Footer from '@/components/landing/footer';
 import Header from '@/components/landing/header';
 import HowItWorks from '@/components/landing/how-it-works';
 import { MenuView } from '@/components/landing/menuview';
-import { Menu } from './(protected)/gamer/components';
 
 export default function Page() {
   return (

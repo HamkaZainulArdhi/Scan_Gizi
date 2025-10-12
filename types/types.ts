@@ -1,5 +1,3 @@
-// Type definitions for the nutrition scanning app
-
 import { Profile, Sppg } from './profil.type';
 
 export interface MenuItemDetection {

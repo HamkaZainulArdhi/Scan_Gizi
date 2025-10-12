@@ -1,17 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { User as SupabaseUser } from '@supabase/supabase-js';
 import {
   ArrowUpDown,
-  Calendar,
   Eye,
   ImageIcon,
   MoreHorizontal,
   Search,
-  Sparkles,
   Trash2,
 } from 'lucide-react';
 import { toast } from 'sonner';
@@ -90,11 +87,21 @@ export function HistoryTable({ user }: HistoryTableProps) {
 
   // Actions
   const handleShareCard = async (scan: NutritionScan) => {
+    if (!profile) {
+      toast.error('Profil belum dimuat, coba lagi nanti');
+      return;
+    }
+
     try {
       const { generateShareCard } = await import('@/lib/export-utils');
       const scanWithUserName = {
         ...scan,
-        profile,
+        profile: profile
+          ? {
+              ...profile,
+              sppg: profile.sppg === null ? undefined : profile.sppg,
+            }
+          : undefined,
       };
       const cardUrl = await generateShareCard(scanWithUserName);
       const link = document.createElement('a');

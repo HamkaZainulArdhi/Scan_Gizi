@@ -1,4 +1,3 @@
-import { DropdownMenu4 } from '@/partials/dropdown-menu/dropdown-menu-4';
 import {
   RemixiconComponentType,
   RiBankLine,
@@ -16,6 +15,7 @@ import {
 import { Badge, BadgeDot } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { DropdownMenu4 } from '@/app/components/partials/dropdown-menu/dropdown-menu';
 
 interface IHighlightsRow {
   icon: LucideIcon | RemixiconComponentType;

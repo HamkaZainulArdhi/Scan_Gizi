@@ -155,19 +155,29 @@ export function DashboardContent({ user }: DashboardContentProps) {
         )}
 
         {viewState === 'results' && currentScan && (
-          <div className="max-w-6xl mx-auto space-y-6">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-foreground">
-                Simpan Hasil Analisis
-              </h2>
-              <div className="flex gap-2 justify-end">
-                <Button onClick={startNewScan} variant="outline">
+          <div className="space-y-6 garis">
+            <div className="flex flex-col gap-4  garis sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col text-center sm:text-left">
+                <h2 className="text-2xl font-bold text-foreground">
+                  Simpan Hasil Analisis
+                </h2>
+                <p className="text-muted-foreground mt-1">
+                  Hasil analisis AI akan disimpan di riwayat analisis.
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-2 justify-center sm:justify-end">
+                <Button
+                  onClick={startNewScan}
+                  variant="outline"
+                  className="w-full sm:w-auto"
+                >
                   <Scan className="mr-2 h-4 w-4" />
-                  Analisi Menu Baru
+                  Analisis Menu Baru
                 </Button>
                 <Button
                   onClick={() => router.push('/history')}
                   variant="primary"
+                  className="w-full sm:w-auto"
                 >
                   <History className="mr-2 h-4 w-4" />
                   Riwayat Analisis

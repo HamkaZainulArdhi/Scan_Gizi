@@ -4,7 +4,6 @@ import { Fragment } from 'react';
 import type { User as SupabaseUser } from '@supabase/supabase-js';
 import { Disc, MapPin } from 'lucide-react';
 import { useHistoryScans } from '@/hooks/use-history-scan';
-// ✅ Ambil dari provider root (misal ProfileProvider)
 import { useProfile } from '@/providers/profile-provider';
 import { ContentLoader } from '@/components/common/content-loader';
 import { EarningsChart } from '@/app/(protected)/components/demo1';
@@ -17,7 +16,7 @@ interface HistoryTableProps {
 }
 
 export function ProfileContent({ user }: HistoryTableProps) {
-  const { profile } = useProfile(); // ambil dari context
+  const { profile } = useProfile();
   const { scans } = useHistoryScans(user);
 
   if (!profile)
@@ -38,10 +37,13 @@ export function ProfileContent({ user }: HistoryTableProps) {
             icon: MapPin,
           },
           {
+            label: profile.sppg?.kecamatan || 'Kecamatan belum diisi',
+            icon: MapPin,
+          },
+          {
             label: profile.sppg?.nama || 'Jabatan belum diisi',
             icon: Disc,
           },
-          // Bisa tambahkan info lain dari profile.sppg kalau perlu
         ]}
       />
 

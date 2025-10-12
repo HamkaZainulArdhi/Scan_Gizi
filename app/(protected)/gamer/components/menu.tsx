@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-// ✅ Gunakan type dari folder types
 import { NutritionAnalysis, NutritionScan } from '@/types/types';
 import { createClient } from '@/lib/supabase/client';
 import { Badge } from '@/components/ui/badge';
@@ -68,14 +67,6 @@ export function Menu() {
     return Math.min(Math.round(avg), 100);
   };
 
-  if (loading) {
-    return (
-      <p className="text-center py-10 text-sm text-muted-foreground">
-        Loading...
-      </p>
-    );
-  }
-
   if (!loading && scans.length === 0) {
     return <Nodata />;
   }
@@ -84,9 +75,6 @@ export function Menu() {
     <Card>
       <CardHeader>
         <CardTitle>Riwayat Scan Makanan</CardTitle>
-        <Button mode="link" underlined="dashed" asChild>
-          <Link href="#">View All</Link>
-        </Button>
       </CardHeader>
 
       <CardContent className="p-5 lg:p-7.5 lg:pb-7">

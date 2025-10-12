@@ -107,8 +107,9 @@ export function NutritionReview({
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        {/* Judul dan deskripsi */}
+        <div className="text-center sm:text-left">
           <h2 className="text-2xl font-bold text-foreground">
             Review & Edit Analysis
           </h2>
@@ -117,12 +118,23 @@ export function NutritionReview({
             menyimpan.
           </p>
         </div>
-        <div className="flex items-center space-x-2">
-          <Button variant="outline" onClick={onCancel} disabled={isSaving}>
+
+        {/* Tombol aksi */}
+        <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-end gap-2">
+          <Button
+            variant="outline"
+            onClick={onCancel}
+            disabled={isSaving}
+            className="w-full sm:w-auto"
+          >
             <X className="w-4 h-4 mr-2" />
             Cancel
           </Button>
-          <Button onClick={handleSave} disabled={isSaving}>
+          <Button
+            onClick={handleSave}
+            disabled={isSaving}
+            className="w-full sm:w-auto"
+          >
             {isSaving ? (
               <>
                 <div className="w-4 h-4 mr-2 animate-spin rounded-full border-2 border-current border-t-transparent" />

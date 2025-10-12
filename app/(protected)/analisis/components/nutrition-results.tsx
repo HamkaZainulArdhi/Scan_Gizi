@@ -78,7 +78,7 @@ export function NutritionResults({ scan }: NutritionResultsProps) {
   };
 
   return (
-    <div className="space-y-6 px-4">
+    <div className="space-y-6">
       <div className="grid lg:grid-cols-2 gap-6">
         <Card>
           <CardContent className="p-4">

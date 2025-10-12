@@ -32,13 +32,8 @@ export function Header() {
       <Container className="flex items-center justify-between flex-wrap gap-3">
         <Link href="/">
           <img
-            src={toAbsoluteUrl('/media/app/mini-logo-gray.svg')}
-            className="dark:hidden h-[30px]"
-            alt="image"
-          />
-          <img
-            src={toAbsoluteUrl('/media/app/mini-logo-gray-dark.svg')}
-            className="hidden dark:inline-block h-[30px]"
+            src={toAbsoluteUrl('/media/logo/logo.png')}
+            className="h-[30px]"
             alt="image"
           />
         </Link>

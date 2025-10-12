@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { SupabaseClient } from '@supabase/supabase-js';
 import { NutritionAnalysis, NutritionScan } from '@/types/types';
+import type { NutritionSummary } from '@/types/types';
 import { createClient } from '@/lib/supabase/client';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
@@ -14,7 +14,7 @@ import Nodata from '../../history/components/no-data';
 export function Menu() {
   const [scans, setScans] = useState<NutritionScan[]>([]);
   const [loading, setLoading] = useState(true);
-  const supabase = createClient();
+  const supabase: SupabaseClient = createClient();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,17 +37,29 @@ export function Menu() {
 
         if (error) throw error;
 
-        const parsedData = (data || []).map((item: any) => {
-          let parsedFacts = item.nutrition_facts;
-          if (typeof parsedFacts === 'string') {
-            try {
-              parsedFacts = JSON.parse(parsedFacts);
-            } catch {
-              parsedFacts = { items: [], nutrition_summary: {} };
+        const parsedData: NutritionScan[] = (data || []).map(
+          (item: NutritionScan) => {
+            let parsedFacts = item.nutrition_facts;
+            if (typeof parsedFacts === 'string') {
+              try {
+                parsedFacts = JSON.parse(parsedFacts);
+              } catch {
+                parsedFacts = {
+                  items: [],
+                  nutrition_summary: {
+                    calories_kcal: 0,
+                    protein_g: 0,
+                    fat_g: 0,
+                    carbs_g: 0,
+                    sodium_mg: 0,
+                    fiber_g: 0,
+                  },
+                };
+              }
             }
-          }
-          return { ...item, nutrition_facts: parsedFacts };
-        });
+            return { ...item, nutrition_facts: parsedFacts };
+          },
+        );
 
         setScans(parsedData);
       } catch (err) {
@@ -58,11 +70,19 @@ export function Menu() {
     };
 
     fetchData();
-  }, []);
+  }, [supabase]);
 
-  const getNutritionScore = (facts: Record<string, number>) => {
-    const values = Object.values(facts);
-    if (!values.length) return 0;
+  const getNutritionScore = (summary: NutritionSummary) => {
+    const { calories_kcal, protein_g, fat_g, carbs_g, sodium_mg, fiber_g } =
+      summary;
+    const values = [
+      calories_kcal,
+      protein_g,
+      fat_g,
+      carbs_g,
+      sodium_mg,
+      fiber_g,
+    ];
     const avg = values.reduce((a, b) => a + b, 0) / values.length;
     return Math.min(Math.round(avg), 100);
   };
@@ -82,7 +102,7 @@ export function Menu() {
           <div className="flex flex-no-wrap gap-5">
             {scans.map((scan) => {
               const facts = scan.nutrition_facts as NutritionAnalysis;
-              const score = getNutritionScore(facts.nutrition_summary as any);
+              const score = getNutritionScore(facts.nutrition_summary);
               const formattedDate = new Date(scan.scan_date).toLocaleString(
                 'id-ID',
                 { dateStyle: 'medium', timeStyle: 'short' },

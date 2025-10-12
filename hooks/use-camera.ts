@@ -78,7 +78,7 @@ export function useCamera(): UseCameraReturn {
         if (videoRef.current) {
           videoRef.current.srcObject = newStream;
         }
-      } catch (err) {
+      } catch {
         setError(
           'Tidak dapat mengakses kamera. Pastikan izin kamera telah diberikan.',
         );

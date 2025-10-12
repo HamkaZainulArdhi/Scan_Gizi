@@ -9,7 +9,7 @@ import { ContentLoader } from '@/components/common/content-loader';
 import { EarningsChart } from '@/app/(protected)/components/demo1';
 import { UserHero } from '@/app/components/partials/common/user-hero';
 import Stats from '../history/components/stats';
-import { Menu } from './components';
+import { Menu } from './components/menu';
 
 interface HistoryTableProps {
   user: SupabaseUser;

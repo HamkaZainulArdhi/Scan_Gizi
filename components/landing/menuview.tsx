@@ -1,9 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { AnimatePresence, motion } from 'framer-motion';
-import { NutritionAnalysis, NutritionScan } from '@/types/types';
+import { motion } from 'framer-motion';
+import {
+  MenuItemDetection,
+  NutritionAnalysis,
+  NutritionScan,
+} from '@/types/types';
 import { supabasePublic } from '@/lib/supabase/public-client';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -22,8 +25,20 @@ import { CustomTitle } from '../custom/title';
 
 export function MenuView() {
   const [scans, setScans] = useState<NutritionScan[]>([]);
-  const [sppgList, setSppgList] = useState<any[]>([]);
-  const [profiles, setProfiles] = useState<any[]>([]);
+  // sppg rows returned by the query only include some fields
+  type SppgRow = {
+    id: string;
+    nama?: string | null;
+    kecamatan?: string | null;
+  };
+
+  type ProfileRef = {
+    id_user: string;
+    sppg_id?: string | null;
+  };
+
+  const [sppgList, setSppgList] = useState<SppgRow[]>([]);
+  const [profiles, setProfiles] = useState<ProfileRef[]>([]);
   const [selectedKecamatan, setSelectedKecamatan] = useState<string | null>(
     null,
   );
@@ -81,25 +96,66 @@ export function MenuView() {
         if (error) throw error;
 
         // Parse & join sppg
-        const parsedData = (data || []).map((item: any) => {
-          let parsedFacts = item.nutrition_facts;
-          if (typeof parsedFacts === 'string') {
+        type DbScan = {
+          id: string;
+          image_url: string;
+          scan_date: string;
+          menu_items?: MenuItemDetection[];
+          nutrition_facts?: string | NutritionAnalysis | unknown;
+          created_at?: string;
+          user_id?: string;
+          user_name?: string;
+        };
+
+        const parsedData = (data || []).map((item: DbScan) => {
+          const emptySummary = {
+            calories_kcal: 0,
+            protein_g: 0,
+            fat_g: 0,
+            carbs_g: 0,
+            sodium_mg: 0,
+            fiber_g: 0,
+          } as const;
+
+          let parsedFacts: NutritionAnalysis | Record<string, number> =
+            (item.nutrition_facts as NutritionAnalysis) || {
+              items: [],
+              nutrition_summary: emptySummary,
+            };
+          if (typeof item.nutrition_facts === 'string') {
             try {
-              parsedFacts = JSON.parse(parsedFacts);
+              parsedFacts = JSON.parse(item.nutrition_facts as string);
             } catch {
-              parsedFacts = { items: [], nutrition_summary: {} };
+              parsedFacts = { items: [], nutrition_summary: emptySummary };
             }
           }
 
           const profile = profiles.find((p) => p.id_user === item.user_id);
           const sppg = sppgList.find((s) => s.id === profile?.sppg_id);
 
-          return { ...item, profile, sppg, nutrition_facts: parsedFacts };
+          type NutritionScanRow = Omit<NutritionScan, 'profile'> & {
+            profile?: ProfileRef;
+            sppg?: SppgRow;
+          };
+
+          const scanObj: NutritionScanRow = {
+            id: item.id,
+            image_url: item.image_url,
+            scan_date: item.scan_date,
+            menu_items: item.menu_items || [],
+            nutrition_facts: parsedFacts as NutritionAnalysis,
+            created_at: item.created_at || '',
+            user_name: item.user_name,
+            profile,
+            sppg,
+          };
+
+          return scanObj;
         });
 
         // Filter sppg & 3 hari terakhir
         const filtered = parsedData
-          .filter((scan: any) => {
+          .filter((scan) => {
             const scanDate = new Date(scan.scan_date)
               .toISOString()
               .split('T')[0];
@@ -110,8 +166,7 @@ export function MenuView() {
               new Date(b.scan_date).getTime() - new Date(a.scan_date).getTime(),
           )
           .slice(0, 3);
-
-        setScans(filtered);
+        setScans(filtered as unknown as NutritionScan[]);
       } catch (err) {
         console.error('Gagal memuat data nutrition_scans:', err);
       } finally {
@@ -125,7 +180,9 @@ export function MenuView() {
   }, [sppgList, profiles, selectedKecamatan, selectedSppg]);
 
   // Kecamatan unik
-  const kecamatanList = Array.from(new Set(sppgList.map((s) => s.kecamatan)));
+  const kecamatanList = Array.from(
+    new Set(sppgList.map((s) => s.kecamatan).filter(Boolean)),
+  ) as string[];
 
   // Filter sppg berdasarkan kecamatan
   const sppgFiltered = selectedKecamatan
@@ -236,7 +293,10 @@ export function MenuView() {
                   {scans.map((scan) => {
                     const facts = scan.nutrition_facts as NutritionAnalysis;
                     const score = getNutritionScore(
-                      facts.nutrition_summary as any,
+                      facts.nutrition_summary as unknown as Record<
+                        string,
+                        number
+                      >,
                     );
                     const formattedDate = new Date(
                       scan.scan_date,

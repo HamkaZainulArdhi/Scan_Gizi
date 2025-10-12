@@ -1,6 +1,5 @@
 'use client';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {
   ChangeEvent,
   DragEvent,
@@ -14,7 +13,8 @@ import { getAcceptTypeString, getListFiles, openFileDialog } from './utils';
 interface ImageInputFile {
   dataURL?: string;
   file?: File;
-  [key: string]: any;
+  // allow unknown additional metadata but avoid `any`
+  [key: string]: unknown;
 }
 
 type ImageInputFiles = ImageInputFile[];
@@ -38,11 +38,11 @@ interface ImageInputExport {
   onImageRemove: (index: number) => void;
   isDragging: boolean;
   dragProps: {
-    onDrop: (e: any) => void;
-    onDragEnter: (e: any) => void;
-    onDragLeave: (e: any) => void;
-    onDragOver: (e: any) => void;
-    onDragStart: (e: any) => void;
+    onDrop: (e: DragEvent<HTMLDivElement>) => void;
+    onDragEnter: (e: DragEvent<HTMLDivElement>) => void;
+    onDragLeave: (e: DragEvent<HTMLDivElement>) => void;
+    onDragOver: (e: DragEvent<HTMLDivElement>) => void;
+    onDragStart: (e: DragEvent<HTMLDivElement>) => void;
   };
 }
 

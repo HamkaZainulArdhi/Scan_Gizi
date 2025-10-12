@@ -2,11 +2,15 @@
 
 import { createContext, useContext } from 'react';
 import useSWRImmutable from 'swr';
+import { Profile, Sppg } from '@/types/profil.type';
+
+// ✅ Gabungan Profile dan Sppg
+type ProfileWithSppg = Profile & { sppg?: Sppg | null };
 
 type ProfileContextType = {
-  profile: any | null;
+  profile: ProfileWithSppg | null;
   isLoading: boolean;
-  error: any;
+  error: Error | { message: string } | null;
 };
 
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
@@ -23,10 +27,20 @@ const fetcher = async (url: string) => {
 export function ProfileProvider({ children }: { children: React.ReactNode }) {
   const { data, error, isLoading } = useSWRImmutable('/api/profile', fetcher);
 
-  const profile = data?.data ?? null; // Remove array access since it's a single object
+  const profile = data?.data ?? null;
 
   return (
-    <ProfileContext.Provider value={{ profile, isLoading, error }}>
+    <ProfileContext.Provider
+      value={{
+        profile,
+        isLoading,
+        error: error
+          ? error instanceof Error
+            ? error
+            : { message: String(error) }
+          : null,
+      }}
+    >
       {children}
     </ProfileContext.Provider>
   );

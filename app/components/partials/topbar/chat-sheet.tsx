@@ -123,7 +123,7 @@ export function ChatSheet({ trigger }: { trigger: ReactNode }) {
     <Sheet>
       <SheetTrigger asChild>{trigger}</SheetTrigger>
       <SheetContent
-        className="p-0 gap-0 sm:w-[450px] sm:max-w-none inset-5 start-auto 
+        className="p-0 gap-0 sm:w-[450px] sm:max-w-none inset-5 start-auto
                h-[calc(100vh-80px)] rounded-lg flex flex-col overflow-hidden"
       >
         {/* HEADER */}

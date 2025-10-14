@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import {
   MenuItemDetection,
@@ -44,6 +45,8 @@ export function MenuView() {
   );
   const [selectedSppg, setSelectedSppg] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const ease = [0.16, 1, 0.3, 1] as const;
 
   // 🟡 Ambil data sppg
   useEffect(() => {
@@ -196,10 +199,41 @@ export function MenuView() {
     return Math.min(Math.round(avg), 100);
   };
 
+  const pop = {
+    hidden: { opacity: 0, scale: 0.92 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.6, ease } },
+  };
+
   return (
-    <section className="py-2 ">
+    <section className="py-2 mb-7 relative">
       {/* Header */}
-      <div className="text-center mb-4">
+      <motion.div
+        variants={pop}
+        className="absolute bottom-0 left-0 -z-1 top-2"
+      >
+        <Image
+          src="/media/benner/beside.png"
+          alt=""
+          width={426}
+          height={851}
+          className="h-auto w-24 md:w-36 lg:w-48 [transform:scaleY(-1)]"
+        />
+      </motion.div>
+
+      <motion.div
+        variants={pop}
+        className="absolute bottom-0 right-0 -z-1 top-2"
+      >
+        <Image
+          src="/media/benner/beside.png"
+          alt=""
+          width={426}
+          height={851}
+          className="h-auto w-24 md:w-36 lg:w-48 [transform:scale(-1,-1)]"
+        />
+      </motion.div>
+
+      <div className="text-center mb-4 px-6">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -209,13 +243,15 @@ export function MenuView() {
         >
           <CustomBadge>Menu Kita</CustomBadge>
 
-          <CustomTitle>Apa Menu Kita Hari ini?</CustomTitle>
+          <CustomTitle>
+            Cek & Lihat
+            <span className="text-primary"> Menu Kita </span>
+            Hari ini
+          </CustomTitle>
 
           <CustomSubtitle>
-            Memudahkan orang tua memantau menu dan kandungan gizi makanan anak
-            setiap hari. Dengan analisis otomatis dan data yang transparan,
-            orang tua tahu bahwa makanan yang diberikan benar-benar bergizi dan
-            sesuai standar MBG.
+            Orang tua memantau menu dan gizi anak dengan mudah melalui analisis
+            otomatis dan data yang transparan.
           </CustomSubtitle>
 
           <div className="flex justify-center">
@@ -267,11 +303,18 @@ export function MenuView() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
-        className="max-w-screen"
+        className="max-w-screen px-6"
       >
         <Card className="max-w-[853px] mx-auto border">
           <CardHeader>
             <CardTitle>Riwayat Scan Makanan</CardTitle>
+          </CardHeader>
+          <CardHeader>
+            <Badge variant="success" appearance="outline" size="lg">
+              SD
+            </Badge>
+            <Badge>SMP</Badge>
+            <Badge>SMA</Badge>
           </CardHeader>
 
           <CardContent className="p-5 lg:p-7.5 lg:pb-7">
@@ -306,16 +349,13 @@ export function MenuView() {
                     });
 
                     const items = facts.items || [];
-                    const displayItems = items.slice(0, 5).map((i) => i.name);
-                    const remainingItems =
-                      items.length > 5 ? items.length - 5 : 0;
-
+                    // menu makananya
+                    const displayItems = items.map((i) => i.name);
                     const summaryEntries = Object.entries(
                       facts.nutrition_summary || {},
                     );
-                    const displaySummary = summaryEntries.slice(0, 4);
-                    const remainingSummary =
-                      summaryEntries.length > 4 ? summaryEntries.length - 4 : 0;
+                    // nutrisi
+                    const displaySummary = summaryEntries;
 
                     return (
                       <Card key={scan.id} className="w-[250px] shrink-0">
@@ -327,11 +367,6 @@ export function MenuView() {
                         <div className="p-4">
                           <h3 className="font-semibold text-base mb-1">
                             {displayItems.join(', ') || 'Tanpa Nama Menu'}{' '}
-                            {remainingItems > 0 && (
-                              <span className="text-muted-foreground text-sm">
-                                (+{remainingItems} lainnya)
-                              </span>
-                            )}
                           </h3>
 
                           <p className="text-xs text-muted-foreground mb-2">
@@ -344,11 +379,6 @@ export function MenuView() {
                                 {key}: {value}
                               </Badge>
                             ))}
-                            {remainingSummary > 0 && (
-                              <Badge variant="outline">
-                                +{remainingSummary} lainnya
-                              </Badge>
-                            )}
                           </div>
 
                           <Progress value={score} className="h-2 mb-1" />

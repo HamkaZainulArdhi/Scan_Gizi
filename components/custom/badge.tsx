@@ -10,7 +10,7 @@ export function CustomBadge({
   return (
     <div
       className={cn(
-        'py-1 text-primary font-semibold border-b-2 border-primary mb-1.5',
+        'py-1 text-primary bg-primary/10 px-4  rounded-lg border-primary mb-1.5',
         className,
       )}
     >

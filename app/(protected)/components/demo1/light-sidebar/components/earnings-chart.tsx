@@ -11,9 +11,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-// Hardcoded dummy data for the earnings chart
 const dummyChartData: number[] = [
-  58, 64, 52, 45, 42, 38, 45, 53, 56, 65, 75, 85,
+  58, 64, 52, 45, 42, 38, 45, 53, 56, 65, 75, 85, 900,
 ];
 
 const EarningsChart = () => {
@@ -114,7 +113,7 @@ const EarningsChart = () => {
     tooltip: {
       enabled: true,
       custom({ series, seriesIndex, dataPointIndex, w }) {
-        const number = parseInt(series[seriesIndex][dataPointIndex]) * 10;
+        const number = parseInt(series[seriesIndex][dataPointIndex]);
         const month = w.globals.seriesX[seriesIndex][dataPointIndex];
         const monthName = categories[month];
 

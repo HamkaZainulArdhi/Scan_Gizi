@@ -88,7 +88,7 @@ export function Demo8Layout({ children }: { children: ReactNode }) {
                                 profile?.avatar_url !== 'null' &&
                                 profile?.avatar_url.trim() !== ''
                                   ? profile.avatar_url
-                                  : toAbsoluteUrl('/media/add-poto.png')
+                                  : toAbsoluteUrl('/media/benner/add-foto.jpg')
                               }
                               alt="User Avatar"
                               className="h-10 w-10 rounded-full border-2 border-mono/30 shrink-0 cursor-pointer"

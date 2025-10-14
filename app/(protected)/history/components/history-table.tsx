@@ -205,8 +205,8 @@ export function HistoryTable({ user }: HistoryTableProps) {
   }
 
   return (
-    <div className="bg-background">
-      <main className="container mx-auto px-4">
+    <div className="bg-background grid grid-cols-1 lg:grid-cols-3 gap-y-5 lg:gap-7.5">
+      <main className="container mx-auto px-4 col-span-2 lg:col-span-3">
         <div className="max-w-7xl mx-auto">
           <Stats scans={scans} />
           <Separator className="mb-8" />

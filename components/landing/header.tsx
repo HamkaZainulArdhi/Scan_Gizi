@@ -1,7 +1,10 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Menu, Moon, Sun } from 'lucide-react';
+import { LogIn, Menu, Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { toAbsoluteUrl } from '@/lib/helpers';
 import { cn } from '@/lib/utils';
@@ -9,35 +12,39 @@ import { Button } from '@/components/ui/button';
 import {
   Drawer,
   DrawerContent,
+  DrawerDescription,
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer';
 
 const Header = () => {
   const navItems = ['Home', 'Fitur'];
-
   const { resolvedTheme, setTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [mounted, setMounted] = useState(false);
 
+  const router = useRouter();
+  const pathname = usePathname();
+
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  // Track scroll untuk highlight menu aktif (hanya di halaman utama)
   useEffect(() => {
+    if (pathname !== '/') return;
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
-      // Always set 'home' as active when at the very top
       if (window.scrollY < 50) {
         setActiveSection('home');
         return;
       }
 
-      // Track active section based on scroll position
-      const sections = ['fitur', 'how-it-works', 'pricing', 'faq', 'contact'];
+      const sections = ['fitur', 'how-it-works'];
       const scrollPosition = window.scrollY + 200;
       for (const section of sections) {
         const element = document.getElementById(section);
@@ -52,29 +59,33 @@ const Header = () => {
           }
         }
       }
-      // Do not update activeSection if not at top and not in any section (last matched section stays active)
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [activeSection]);
+  }, [pathname, activeSection]);
 
   const handleNavClick = (item: string) => {
     setIsOpen(false);
+    const targetId = item.toLowerCase().replace(' ', '-');
+
+    // kalau lagi bukan di halaman utama → redirect ke home + hash
+    if (pathname !== '/') {
+      if (item === 'Home') {
+        router.push('/'); // ke atas halaman home
+      } else {
+        router.push(`/#${targetId}`); // ke section tertentu
+      }
+      return;
+    }
+
+    // kalau lagi di halaman utama → scroll langsung
     if (item === 'Home') {
-      // Scroll to top of page for Home link
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      const targetId = item.toLowerCase().replace(' ', '-');
       const element = document.getElementById(targetId);
       if (element) {
-        element.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        });
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
   };
@@ -83,10 +94,11 @@ const Header = () => {
     const sectionMap: { [key: string]: string } = {
       Home: 'home',
       Fitur: 'fitur',
-      Pricing: 'pricing',
-      FAQ: 'faq',
-      Contact: 'contact',
     };
+
+    if (pathname !== '/') {
+      return item === 'home';
+    }
     return activeSection === sectionMap[item];
   };
 
@@ -101,11 +113,7 @@ const Header = () => {
           : 'bg-transparent',
       )}
     >
-      <div
-        className={cn(
-          'container mx-auto px-6 py-4 flex items-center justify-between',
-        )}
-      >
+      <div className="container mx-auto px-6 py-4 flex items-center justify-between">
         <Link href="/" aria-label="Home">
           <img
             className="h-[45px] max-w-none"
@@ -113,10 +121,10 @@ const Header = () => {
             alt="logo"
           />
         </Link>
+
         <div className="flex items-center gap-2.5">
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            {/* Nav items */}
+          <nav className="hidden md:flex items-center space-x-5">
             {navItems.map((item, index) => (
               <motion.button
                 key={item}
@@ -141,7 +149,10 @@ const Header = () => {
             ))}
 
             <Link href="/signin">
-              <Button variant="primary">Masuk SPPG</Button>
+              <Button variant="primary">
+                <LogIn />
+                Masuk SPPG
+              </Button>
             </Link>
           </nav>
 
@@ -159,6 +170,8 @@ const Header = () => {
               </DrawerTrigger>
               <DrawerContent className="px-6 pb-8">
                 <DrawerTitle></DrawerTitle>
+                <DrawerDescription></DrawerDescription>
+
                 <nav className="flex flex-col space-y-4 mt-6">
                   {navItems.map((item) => (
                     <Button
@@ -166,14 +179,22 @@ const Header = () => {
                       onClick={() => handleNavClick(item)}
                       variant="ghost"
                       className={cn(
-                        'w-full justify-start hover:text-indigo-600 dark:hover:text-indigo-400',
-                        isActiveItem(item) &&
-                          'text-indigo-600 dark:text-indigo-400 font-medium',
+                        'w-full justify-start hover:text-primary',
+                        isActiveItem(item) && 'text-primary font-medium',
                       )}
                     >
                       {item}
                     </Button>
                   ))}
+                  <div className="pt-4">
+                    <Button
+                      className="w-full"
+                      variant="primary"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Masuk SPPG
+                    </Button>
+                  </div>
                 </nav>
               </DrawerContent>
             </Drawer>

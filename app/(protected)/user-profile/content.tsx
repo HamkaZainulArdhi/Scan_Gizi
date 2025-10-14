@@ -31,19 +31,32 @@ export function PersonalInfo() {
   const { profile, isLoading, error } = useProfile();
 
   // Initialize empty form data or use existing profile
-  const [formData, setFormData] = useState<ProfileWithSppg>(
-    () =>
-      ({
-        id: profile?.id ?? null,
-        id_user: user?.id || '',
-        nama_lengkap: profile?.nama_lengkap ?? '',
-        avatar_url: profile?.avatar_url ?? null,
-        jabatan: profile?.jabatan ?? null,
-        created_at: profile?.created_at ?? null,
-        sppg_id: profile?.sppg_id ?? null,
-        sppg: profile?.sppg ?? null,
-      }) as ProfileWithSppg,
-  );
+  const [formData, setFormData] = useState<ProfileWithSppg>(() => {
+    const defaultSppg = {
+      id: profile?.sppg?.id || null,
+      nama: '',
+      wilayah: '',
+      alamat: '',
+      kecamatan: '',
+      created_at: new Date().toISOString(),
+    };
+
+    return {
+      id: profile?.id || user?.id, // Use user id as fallback
+      id_user: user?.id || '',
+      nama_lengkap: profile?.nama_lengkap ?? '',
+      avatar_url: profile?.avatar_url ?? null,
+      jabatan: profile?.jabatan ?? null,
+      created_at: profile?.created_at || new Date().toISOString(), // Default to current timestamp
+      sppg_id: profile?.sppg_id ?? null,
+      sppg: profile?.sppg
+        ? {
+            ...defaultSppg,
+            ...profile.sppg,
+          }
+        : defaultSppg,
+    } as ProfileWithSppg;
+  });
 
   // Initialize avatar state
   const [avatar, setAvatar] = useState<ImageInputFile[]>(() =>
@@ -57,27 +70,38 @@ export function PersonalInfo() {
   // Update form when profile changes
   useEffect(() => {
     if (profile) {
-      setFormData((prev) => ({
-        ...prev,
-        ...profile,
-        nama_lengkap: profile.nama_lengkap ?? '',
-        id_user: profile.id_user ?? '',
-        id: profile.id ?? null,
-        avatar_url: profile.avatar_url ?? null,
-        jabatan: profile.jabatan ?? null,
-        created_at: profile.created_at ?? null,
-        sppg_id: profile.sppg_id ?? null,
-        sppg: profile.sppg
+      setFormData((prev) => {
+        // Handle SPPG data with proper types
+        const sppgData = profile.sppg
           ? {
               id: profile.sppg.id,
-              nama: profile.sppg.nama ?? null,
-              wilayah: profile.sppg.wilayah ?? null,
-              alamat: profile.sppg.alamat ?? null,
-              kecamatan: profile.sppg.kecamatan ?? null,
-              created_at: profile.sppg.created_at ?? null,
+              nama: profile.sppg.nama ?? '',
+              wilayah: profile.sppg.wilayah ?? '',
+              alamat: profile.sppg.alamat ?? '',
+              kecamatan: profile.sppg.kecamatan ?? '',
+              created_at: profile.sppg.created_at || new Date().toISOString(),
             }
-          : null,
-      }));
+          : {
+              id: prev.sppg?.id ?? '',
+              nama: '',
+              wilayah: '',
+              alamat: '',
+              kecamatan: '',
+              created_at: new Date().toISOString(),
+            };
+
+        return {
+          ...prev,
+          nama_lengkap: profile.nama_lengkap ?? '',
+          id_user: profile.id_user || user?.id || '',
+          id: profile.id || user?.id || '',
+          avatar_url: profile.avatar_url ?? null,
+          jabatan: profile.jabatan ?? null,
+          created_at: profile.created_at || new Date().toISOString(),
+          sppg_id: profile.sppg_id ?? '',
+          sppg: sppgData,
+        } as ProfileWithSppg;
+      });
       setAvatar(
         profile.avatar_url &&
           profile.avatar_url !== 'null' &&
@@ -86,7 +110,7 @@ export function PersonalInfo() {
           : [],
       );
     }
-  }, [profile]);
+  }, [profile, user?.id]);
 
   if (error) return <SomethingWrong />;
   if (isLoading)
@@ -111,16 +135,26 @@ export function PersonalInfo() {
           reader.readAsDataURL(avatar[0].file!);
         });
       }
-
-      const { ...rest } = formData;
-      const payload = {
-        ...rest,
-        avatarFileBase64: avatarBase64,
-        avatar_url: avatar.length === 0 ? null : undefined,
-        sppg: formData.sppg,
+      const { sppg, ...rest } = formData;
+      const sppgData = {
+        id: sppg?.id || null,
+        nama: sppg?.nama || '',
+        wilayah: sppg?.wilayah || '',
+        alamat: sppg?.alamat || '',
+        kecamatan: sppg?.kecamatan || '',
+        created_at: sppg?.created_at || new Date().toISOString(),
       };
 
-      // Optimistic update with new data shape (single object)
+      const payload = {
+        ...rest,
+        id: formData.id || user?.id,
+        id_user: user?.id,
+        created_at: formData.created_at || new Date().toISOString(),
+        avatarFileBase64: avatarBase64,
+        avatar_url: avatar.length === 0 ? null : undefined,
+        sppg: sppgData,
+      };
+
       const optimisticData = {
         ...formData,
         avatar_url: avatar.length > 0 ? avatar[0].dataURL : null,
@@ -173,23 +207,20 @@ export function PersonalInfo() {
                         className="shadow-xs text-secondary-foreground/80 hover:text-foreground absolute z-1 size-5 -top-0.5 -end-0.5 rounded-full"
                         onClick={(e) => {
                           e.stopPropagation();
-                          setAvatar([
-                            {
-                              dataURL: toAbsoluteUrl(`/media/add-poto.png`),
-                            },
-                          ]);
                         }}
                       >
                         <X className="size-3.25!" />
                       </Button>
                     </TooltipTrigger>
-                    <TooltipContent>Click to remove or revert</TooltipContent>
+                    <TooltipContent>
+                      klik atau tekan untuk mengganti foto
+                    </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
                 <div
                   className="relative w-48 h-48 border-2 border-green-500 rounded-lg overflow-hidden bg-center bg-cover"
                   style={{
-                    backgroundImage: `url(${toAbsoluteUrl(`/media/avatars/blank.png`)})`,
+                    backgroundImage: `url(${toAbsoluteUrl(`/media/benner/add-foto.jpg`)})`,
                   }}
                 >
                   {avatar.length > 0 && (

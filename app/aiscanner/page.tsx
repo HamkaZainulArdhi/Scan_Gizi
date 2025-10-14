@@ -1,29 +1,21 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import type { User as SupabaseUser } from '@supabase/supabase-js';
-import { History, Scan } from 'lucide-react';
+import { Scan } from 'lucide-react';
 import type { NutritionScan } from '@/types/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ImageUpload } from './image-upload';
-import { NutritionResults } from './nutrition-results';
-import { NutritionReview } from './nutrition-review';
-
-interface DashboardContentProps {
-  user: SupabaseUser;
-}
+import Footer from '@/components/landing/footer';
+import Header from '@/components/landing/header';
+import { ImageUpload, NutritionResults } from './components';
 
 type ViewState = 'upload' | 'review' | 'results';
 
-export function DashboardContent({ user }: DashboardContentProps) {
+export default function AIscanner() {
   const [currentScan, setCurrentScan] = useState<NutritionScan | null>(null);
   const [viewState, setViewState] = useState<ViewState>('upload');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
   const [imageUploadKey, setImageUploadKey] = useState(0);
 
   const handleImageUploaded = async (imageUrl: string) => {
@@ -47,44 +39,12 @@ export function DashboardContent({ user }: DashboardContentProps) {
 
       const scanResult: NutritionScan = data;
       setCurrentScan(scanResult);
-      setViewState('review');
+      setViewState('results');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Gagal menganalisis');
     } finally {
       setIsAnalyzing(false);
     }
-  };
-
-  const handleSaveScan = async (editedScan: NutritionScan) => {
-    setIsSaving(true);
-    try {
-      const response = await fetch('/api/save-scan', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...editedScan,
-          user_id: user.id,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to save scan');
-      }
-
-      setCurrentScan(editedScan);
-      setViewState('results');
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to save scan');
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
-  const handleCancelReview = () => {
-    setViewState('upload');
-    setCurrentScan(null);
   };
 
   const startNewScan = () => {
@@ -93,14 +53,9 @@ export function DashboardContent({ user }: DashboardContentProps) {
     setError(null);
   };
 
-  // const handleLogout = async () => {
-  //   const supabase = createClient();
-  //   await supabase.auth.signOut();
-  //   router.push('/');
-  // };
-
   return (
-    <div className="bg-background h-[500px] ">
+    <div className="bg-background h-full p-7 mt-18 w-full ">
+      <Header />
       <main className="container mx-auto px-4 h-full">
         {viewState === 'upload' && (
           <div className="max-w-4xl mx-auto  min-h-full">
@@ -143,16 +98,11 @@ export function DashboardContent({ user }: DashboardContentProps) {
           </div>
         )}
 
-        {viewState === 'review' && currentScan && (
+        {/* {viewState === 'review' && currentScan && (
           <div className="max-w-6xl mx-auto">
-            <NutritionReview
-              scan={currentScan}
-              onSave={handleSaveScan}
-              onCancel={handleCancelReview}
-              isSaving={isSaving}
-            />
+            <NutritionReview scan={currentScan} onCancel={handleCancelReview} />
           </div>
-        )}
+        )} */}
 
         {viewState === 'results' && currentScan && (
           <div className="space-y-6">
@@ -174,19 +124,12 @@ export function DashboardContent({ user }: DashboardContentProps) {
                   <Scan className="mr-2 h-4 w-4" />
                   Analisis Menu Baru
                 </Button>
-                <Button
-                  onClick={() => router.push('/history')}
-                  variant="primary"
-                  className="w-full sm:w-auto"
-                >
-                  <History className="mr-2 h-4 w-4" />
-                  Riwayat Analisis
-                </Button>
               </div>
             </div>
             <NutritionResults scan={currentScan} />
           </div>
         )}
+        <Footer />
       </main>
     </div>
   );

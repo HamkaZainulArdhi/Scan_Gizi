@@ -43,26 +43,17 @@ const Footer: React.FC = () => {
               <h3 className="font-medium text-primary  mb-4">Program</h3>
               <ul className="space-y-2 text-sm text-gray-300">
                 <li>
-                  <Link
-                    href="/about"
-                    className="hover:text-white transition-colors"
-                  >
-                    Online Course
+                  <Link href="/" className="hover:text-white transition-colors">
+                    LLM Gemini
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/about"
-                    className="hover:text-white transition-colors"
-                  >
-                    Bootcamp
+                  <Link href="/" className="hover:text-white transition-colors">
+                    YOLO v11
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/about"
-                    className="hover:text-white transition-colors"
-                  >
+                  <Link href="/" className="hover:text-white transition-colors">
                     Corporate Training
                   </Link>
                 </li>
@@ -74,10 +65,7 @@ const Footer: React.FC = () => {
               <h3 className="font-medium mb-4 text-primary ">Company</h3>
               <ul className="space-y-2 text-sm text-gray-300">
                 <li>
-                  <Link
-                    href="/about"
-                    className="hover:text-white transition-colors"
-                  >
+                  <Link href="/" className="hover:text-white transition-colors">
                     Tentang Kami
                   </Link>
                 </li>

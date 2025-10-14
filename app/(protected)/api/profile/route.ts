@@ -83,6 +83,7 @@ export async function PUT(req: Request) {
             nama: sppg.nama,
             alamat: sppg.alamat,
             wilayah: sppg.wilayah,
+            kecamatan: sppg.kecamatan,
           })
           .eq('id', sppg.id);
         sppgId = sppg.id;
@@ -93,6 +94,7 @@ export async function PUT(req: Request) {
             nama: sppg.nama,
             alamat: sppg.alamat,
             wilayah: sppg.wilayah,
+            kecamatan: sppg.kecamatan,
           })
           .select()
           .single();

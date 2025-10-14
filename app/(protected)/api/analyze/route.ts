@@ -7,6 +7,8 @@ if (!googleApiKey) {
   throw new Error('Google API key is not defined in environment variables');
 }
 const genAI = new GoogleGenerativeAI(googleApiKey);
+const texterror =
+  'Analisis nutrisi gagal dilakukan. Beberapa makanan mungkin tidak terdeteksi dengan benar. unggah foto lain dan pastikan semua makanan dengan terlihat jelas.';
 
 export async function POST(request: NextRequest) {
   try {
@@ -93,7 +95,7 @@ Important:
 - Use Indonesian names for food items
 - Include all visible food items
 - Return only the JSON array, no other text
-- all of content must be in bahasa Indonesia`;
+- all of output content must be in bahasa Indonesia dont use english`;
 
   try {
     const imageResponse = await fetch(imageUrl);
@@ -122,9 +124,7 @@ Important:
     return menuItems;
   } catch (error) {
     console.error('[v0] Food detection error:', error);
-    throw new Error(
-      `Food detection failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
-    );
+    throw new Error(texterror);
   }
 }
 
@@ -169,7 +169,7 @@ Important:
 - Ensure all numbers are realistic and properly calculated
 - The summary should be the sum of all individual items
 - Return only the JSON object, no other text
-- all of content must be in bahasa Indonesia`;
+- all of output content must be in bahasa Indonesia dont use english`;
 
   try {
     const result = await model.generateContent(prompt);
@@ -185,8 +185,9 @@ Important:
     return nutritionAnalysis;
   } catch (error) {
     console.error('[v0] Nutrition analysis error:', error);
-    throw new Error(
-      `Nutrition analysis failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+    console.error(
+      `response text: ${error instanceof Error ? error.message : 'Unknown error'}`,
     );
+    throw new Error(texterror);
   }
 }

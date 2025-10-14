@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import confetti from 'canvas-confetti';
 import { motion } from 'framer-motion';
-import { Atom, AtomIcon, GraduationCap } from 'lucide-react';
+import { Atom, AtomIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const CallToAction = () => {

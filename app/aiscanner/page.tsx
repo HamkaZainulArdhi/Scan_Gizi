@@ -54,7 +54,7 @@ export default function AIscanner() {
   };
 
   return (
-    <div className="bg-background h-full p-7 mt-18 w-full ">
+    <div className="bg-background h-full p-7 mt-24 w-full ">
       <Header />
       <main className="container mx-auto px-4 h-full">
         {viewState === 'upload' && (

@@ -38,7 +38,7 @@ const pop = {
 export default function Hero() {
   return (
     <main
-      className={`${inter.className} relative min-h-[100svh] overflow-hidden bg-background -top-9`}
+      className={`${inter.className} relative min-h-[100svh] overflow-hidden bg-background `}
     >
       {/* Decorative ornaments */}
       <motion.div
@@ -46,9 +46,12 @@ export default function Hero() {
         animate="visible"
         variants={{ hidden: {}, visible: {} }}
         aria-hidden
-        className="pointer-events-none select-none"
+        className="pointer-events-none select-none  "
       >
-        <motion.div variants={pop} className="absolute left-0 top-0">
+        <motion.div
+          variants={pop}
+          className="absolute left-0 hidden md:block md:-top-9"
+        >
           <Image
             src="/media/benner/top.png"
             alt=""
@@ -59,7 +62,10 @@ export default function Hero() {
           />
         </motion.div>
 
-        <motion.div variants={pop} className="absolute right-0 top-0">
+        <motion.div
+          variants={pop}
+          className="absolute right-0 hidden md:block md:-top-9"
+        >
           <Image
             src="/media/benner/top.png"
             alt=""
@@ -109,17 +115,18 @@ export default function Hero() {
         initial="hidden"
         animate="visible"
         variants={container}
-        className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-6 pt-28 text-center md:pt-32"
+        className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-6 pt-28 text-center md:pt-52"
       >
         <motion.h1
           variants={item}
           className="text-balance text-4xl font-extrabold leading-tight tracking-tight md:text-6xl"
         >
           <span className="block">
-            Ketahui <span className="text-amber-500">Nutrisi</span>
+            Ketahui <span className="text-primary">Gizi Menu </span>
           </span>
           <span className="block">
-            Makananmu dalam <span className="text-amber-500">Sekejap</span>
+            <span className="text-primary">MBG </span>Hari Ini <br />
+            Dalam <span className="text-primary">Sekejap</span>
           </span>
         </motion.h1>
 
@@ -127,8 +134,9 @@ export default function Hero() {
           variants={item}
           className="mt-4 max-w-xl text-pretty text-muted-foreground md:max-w-2xl"
         >
-          Makan sehat jadi lebih mudah—pantau asupan harianmu dan wujudkan gaya
-          hidup yang lebih seimbang dengan teknologi pintar.
+          Dengan dukungan <strong>AI Scanner</strong>, setiap menu MBG dapat
+          diverifikasi kandungan gizinya, memastikan transparansi penyaluran dan
+          kualitas asupan anak-anak Indonesia.
         </motion.p>
 
         <motion.div
@@ -137,13 +145,13 @@ export default function Hero() {
         >
           <a
             href="/aiscanner"
-            className="rounded-full border-amber-500 border px-5 py-3 text-sm font-semibold transition-colors"
+            className="rounded-full border-primary border px-5 py-3 text-sm font-semibold transition-colors"
           >
             Video Demo
           </a>
           <a
             href="/aiscanner"
-            className="rounded-full  bg-amber-500 text-white px-5 py-3 text-sm font-semibold transition-colors"
+            className="rounded-full  bg-primary text-white px-5 py-3 text-sm font-semibold transition-colors"
           >
             Mulai analisis
           </a>

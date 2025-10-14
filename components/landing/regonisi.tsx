@@ -31,7 +31,7 @@ export default function RecognitionSection() {
   return (
     <section
       id="recognition"
-      className="w-full bg-white py-16 md:py-24 px-4 text-center"
+      className="w-full bg-background py-16 md:py-24 px-4 text-center"
     >
       <div className="max-w-6xl mx-auto">
         <motion.div

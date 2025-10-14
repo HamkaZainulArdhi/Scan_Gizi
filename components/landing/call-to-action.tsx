@@ -2,7 +2,6 @@ import Link from 'next/link';
 import confetti from 'canvas-confetti';
 import { motion } from 'framer-motion';
 import { Atom, GraduationCap } from 'lucide-react';
-import { Boxes } from '@/components/ui/background-boxes';
 import { Button } from '@/components/ui/button';
 
 const CallToAction = () => {

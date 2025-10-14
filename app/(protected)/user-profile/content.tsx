@@ -110,7 +110,7 @@ export function PersonalInfo() {
           : [],
       );
     }
-  }, [profile]);
+  }, [profile, user?.id]);
 
   if (error) return <SomethingWrong />;
   if (isLoading)

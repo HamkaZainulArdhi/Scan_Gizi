@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/drawer';
 
 const Header = () => {
-  const navItems = ['Home', 'Fitur'];
+  const navItems = ['Home', 'Menu', 'Fitur'];
   const { resolvedTheme, setTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -34,28 +34,29 @@ const Header = () => {
 
   // Track scroll untuk highlight menu aktif (hanya di halaman utama)
   useEffect(() => {
-    if (pathname !== '/') return;
-
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
-      if (window.scrollY < 50) {
-        setActiveSection('home');
-        return;
-      }
+      // Bagian ini cuma dijalankan di halaman home
+      if (pathname === '/') {
+        if (window.scrollY < 50) {
+          setActiveSection('home');
+          return;
+        }
 
-      const sections = ['fitur', 'how-it-works'];
-      const scrollPosition = window.scrollY + 200;
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (
-            scrollPosition >= offsetTop &&
-            scrollPosition < offsetTop + offsetHeight
-          ) {
-            if (activeSection !== section) setActiveSection(section);
-            return;
+        const sections = ['fitur', 'menu'];
+        const scrollPosition = window.scrollY + 200;
+        for (const section of sections) {
+          const element = document.getElementById(section);
+          if (element) {
+            const { offsetTop, offsetHeight } = element;
+            if (
+              scrollPosition >= offsetTop &&
+              scrollPosition < offsetTop + offsetHeight
+            ) {
+              if (activeSection !== section) setActiveSection(section);
+              return;
+            }
           }
         }
       }
@@ -93,6 +94,7 @@ const Header = () => {
   const isActiveItem = (item: string) => {
     const sectionMap: { [key: string]: string } = {
       Home: 'home',
+      Menu: 'menu',
       Fitur: 'fitur',
     };
 
@@ -107,13 +109,13 @@ const Header = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className={cn(
-        'fixed top-0 left-0 right-0 z-40 transition-all duration-300',
+        'fixed top-0 left-0 right-0 md:top-5 md:left-1/2 md:-translate-x-1/2 z-40 transition-all duration-300',
         isScrolled
-          ? 'bg-background/60 backdrop-blur-sm shadow-xs'
+          ? 'bg-background/60  backdrop-blur-sm shadow-xs border border-border rounded-3xl'
           : 'bg-transparent',
       )}
     >
-      <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="container mx-auto px-6 py-4 flex items-center justify-between md:justify-center md:gap-20">
         <Link href="/" aria-label="Home">
           <img
             className="h-[45px] max-w-none"
@@ -122,7 +124,7 @@ const Header = () => {
           />
         </Link>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2.5 ">
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-5">
             {navItems.map((item, index) => (

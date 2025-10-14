@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import confetti from 'canvas-confetti';
 import { motion } from 'framer-motion';
-import { Atom, GraduationCap } from 'lucide-react';
+import { Atom, AtomIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const CallToAction = () => {
@@ -45,7 +45,7 @@ const CallToAction = () => {
             {/* Kiri: Icon + Teks */}
             <div className="flex items-start sm:items-center gap-3 text-left w-full md:w-auto">
               <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-yellow-400/20">
-                <GraduationCap className="text-yellow-50" size={26} />
+                <AtomIcon className="text-yellow-50" size={26} />
               </div>
               <div>
                 <motion.h3
@@ -55,7 +55,7 @@ const CallToAction = () => {
                   viewport={{ once: true }}
                   className="text-white font-semibold text-base sm:text-lg"
                 >
-                  Masih langganan?
+                  Ingin Mencoba AI GiziKita?
                 </motion.h3>
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
@@ -64,7 +64,7 @@ const CallToAction = () => {
                   viewport={{ once: true }}
                   className="text-white/80 text-sm sm:text-base leading-snug"
                 >
-                  Silakan login kembali lewat Portal Mayar.
+                  Silakan akses AI Scanner dan rasakan kemudahannya
                 </motion.p>
               </div>
             </div>
@@ -77,20 +77,22 @@ const CallToAction = () => {
               viewport={{ once: true }}
               className="w-full md:w-auto"
             >
-              <Button
-                size="lg"
-                className="w-full md:w-auto font-semibold rounded-3xl bg-amber-600 hover:bg-amber-600/80"
-                onMouseEnter={(e) => {
-                  if (window.innerWidth < 768) {
-                    handleConfettimobile();
-                  } else {
-                    handleConfetti(e);
-                  }
-                }}
-              >
-                <Atom />
-                <Link href="/aiscanner">Coba AI</Link>
-              </Button>
+              <Link href="/aiscanner">
+                <Button
+                  size="lg"
+                  className="w-full md:w-auto font-semibold rounded-3xl bg-amber-600 hover:bg-amber-600/80"
+                  onMouseEnter={(e) => {
+                    if (window.innerWidth < 768) {
+                      handleConfettimobile();
+                    } else {
+                      handleConfetti(e);
+                    }
+                  }}
+                >
+                  <Atom />
+                  Coba AI
+                </Button>
+              </Link>
             </motion.div>
           </motion.div>
         </div>

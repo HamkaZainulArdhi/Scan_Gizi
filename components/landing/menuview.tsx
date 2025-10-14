@@ -205,7 +205,7 @@ export function MenuView() {
   };
 
   return (
-    <section className="py-2 mb-7 relative">
+    <section id="menu" className="py-2 mb-7 relative">
       {/* Header */}
       <motion.div
         variants={pop}

@@ -1,66 +1,118 @@
-# Metronic 9 | All-in-One Tailwind based HTML/React/Next.js Template for Modern Web Applications
+# 🥗 GiziKita — AI-Based Nutrition Scanner
 
-## Getting Started
+**GiziKita** adalah platform berbasis **AI Scanner** yang membantu orang tua memantau menu dan kandungan gizi anak setiap hari, memastikan asupan mereka bergizi dan sesuai standar program **Makan Bergizi Gratis (MBG)**.
 
-The official [Metronic Next.js Documentation](https://docs.keenthemes.com/metronic-nextjs) will be released soon,
-alongside the stable Metronic release, expected within the next week.
+Dengan dukungan teknologi **AI**, setiap menu MBG dapat **diverifikasi kandungan gizinya**, memastikan **transparansi penyaluran** dan **kualitas asupan** anak-anak Indonesia.
 
-### Prerequisites
+---
 
-- Node.js 16.x or higher
-- Npm or Yarn
-- Tailwind CSS 4.x
-- React 19.x
-- Next.js 15.3.x
-- PostgreSQL 17.4.x
+## 🚀 Fitur Utama
 
-## ReUI Components
+* 🤖 **AI Scanner Gizi** — Menganalisis kandungan gizi dari foto menu secara otomatis.
+* 🍽️ **Pantauan Menu Harian** — Orang tua dapat melihat menu dan asupan anak setiap hari.
+* 📊 **Data Gizi Transparan** — Menampilkan hasil analisis gizi yang mudah dipahami.
+* 🧶 **Riwayat Analisis** — Simpan dan pantau perkembangan gizi anak dari waktu ke waktu.
+* 🧠 **Dukungan Program MBG** — Terintegrasi dengan sistem Makan Bergizi Gratis untuk sekolah.
 
-Metronic now leverages [ReUI](https://reui.io), our open-source React component library.
+---
 
-Star the [ReUI on GitHub](https://github.com/keenthemes/reui) to help us grow the project and stay updated on new features!
+## 🧩 Teknologi yang Digunakan
 
-### Installation
+| Stack                      | Teknologi                                                                     |
+| -------------------------- | ----------------------------------------------------------------------------- |
+| **Framework**              | [Next.js 15](https://nextjs.org/)                                             |
+| **Library UI**             | [React](https://reactjs.org/) + [Tailwind CSS](https://tailwindcss.com/)      |
+| **Animation**              | [Framer Motion](https://www.framer.com/motion/)                               |
+| **Deployment**             | [Vercel](https://vercel.com/)                                                 |
+| **AI/Backend Integration** | Express.js, Node.js dan python YOLO V11 LLM Gemini AI Model                     |
 
-To set up the project dependencies, including those required for React 19, use the `--force` flag to resolve any dependency conflicts:
+---
 
-```bash
-npm install --force
+## 🤠 Arsitektur Singkat
+
+```
+AI Scanner (Model Gizi)
+       ↓
+Next.js (Frontend)
+       ↓
+API Endpoint / Backend Server
+       ↓
+Database (Analisis Gizi, Data Anak, Menu Harian)
 ```
 
-### Database Deployment
+---
 
-This will create the necessary tables in database for user authorization and user management apps :
+## ⚙️ Cara Menjalankan Proyek
 
-```bash
-npx prisma db push
+1. **Clone repositori ini**
+
+   ```bash
+   git clone https://github.com/username/scan_gizi.git
+   cd scan_gizi
+   ```
+
+2. **Instal dependensi**
+
+   ```bash
+   npm install
+   # atau
+   pnpm install
+   ```
+
+3. **Jalankan server development**
+
+   ```bash
+   npm run dev
+   # atau
+   pnpm dev
+   ```
+
+4. **Akses di browser**
+
+   ```
+   http://localhost:3000
+   ```
+
+---
+
+## 🧾 Struktur Folder
+
+```
+gizikita/
+├─ app/                # Routing Next.js (App Router)
+├─ components/         # Reusable UI Components
+├─ lib/                # Helper & Utility Functions
+├─ public/             # Static Assets (images, icons, dll)
+├─ styles/             # Global & Tailwind Styles
+└─ package.json
 ```
 
-Once your schema is deployed, you need to generate the Prisma Client:
+---
 
-```bash
-npx prisma generate
-```
+## 🌱 Kontribusi
 
-### Development
+Kontribusi sangat terbuka!
+Silakan buat **pull request** atau **laporkan issue** bila menemukan bug atau ide pengembangan baru.
 
-Start the development server:
+---
 
-```bash
-npm run dev
-```
+## 🧑‍💻 Tim Pengembang
 
-### Setting Up the Demo Layout
+| Nama                                              | Peran                               |
+| ------------------------------------------------- | ----------------------------------- |
+| [Hamka Zainul Ardhi](https://hamkacv.vercel.app) | Backend Developer & AI Integration  |
+| [Habib Rafi'i](https://github.com/username)       | Frontend Developer & UI/UX Designer |
+| [Avril Nur Adi P](https://github.com/username)    | Product Manager & Quality assurance |
 
-Open `app/(protected)/layout.tsx` and change `Demo1Layout` to any demo, for example, `Demo5Layout` and you will switch entire app layout to the selected demo.
 
-```bash
-<Demo5Layout>
-	{children}
-</Demo5Layout>
-```
+---
 
-### Reporting Issues
+## 📜 Lisensi
 
-If you encounter any issues or have suggestions for improvement, please contact us at [support@keenthemes.com](mailto:support@keenthemes.com).
-Include a detailed description of the issue or suggestion, and we will work to address it in the next stable release.
+Proyek ini dilisensikan di bawah lisensi **MIT** — bebas digunakan dan dikembangkan lebih lanjut dengan atribusi yang sesuai.
+
+---
+
+## ✨ Cuplikan
+
+> "Orang tua memantau menu dan gizi anak yang di salur kan pihak SPPG dengan analisis otomatis dan data yang transparan."

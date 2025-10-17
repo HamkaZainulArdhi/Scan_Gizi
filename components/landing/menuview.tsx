@@ -84,12 +84,12 @@ export function MenuView() {
 
       setLoading(true);
       try {
-        const today = new Date();
-        const days = [0, 1, 2].map((i) => {
-          const d = new Date(today);
-          d.setDate(today.getDate() - i);
-          return d.toISOString().split('T')[0];
-        });
+        // const today = new Date();
+        // const days = [0, 1, 2].map((i) => {
+        //   const d = new Date(today);
+        //   d.setDate(today.getDate() - i);
+        //   return d.toISOString().split('T')[0];
+        // });
 
         const { data, error } = await supabasePublic
           .from('nutrition_scans')
@@ -158,12 +158,15 @@ export function MenuView() {
 
         // Filter sppg & 3 hari terakhir
         const filtered = parsedData
-          .filter((scan) => {
-            const scanDate = new Date(scan.scan_date)
-              .toISOString()
-              .split('T')[0];
-            return scan.sppg?.id === selectedSppg && days.includes(scanDate);
-          })
+          // filter berdasarkan sppg dan 3 hari terakhir
+          // .filter((scan) => {
+          //   const scanDate = new Date(scan.scan_date)
+          //     .toISOString()
+          //     .split('T')[0];
+          //   return scan.sppg?.id === selectedSppg && days.includes(scanDate);
+          // })
+          // ambil 3 data terbaru saja
+          .filter((scan) => scan.sppg?.id === selectedSppg)
           .sort(
             (a, b) =>
               new Date(b.scan_date).getTime() - new Date(a.scan_date).getTime(),

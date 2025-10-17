@@ -62,7 +62,7 @@ export default function Page() {
         // Update context user so protected layout works
         await login(values.email, values.password);
         toast.success('Selamat. Anda Berhasil masuk');
-        router.push('/history');
+        router.push('/board');
       } else {
         setError('kredensial tidak valid. Silakan coba lagi.');
       }

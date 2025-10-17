@@ -27,7 +27,7 @@ export function SidebarMenu() {
     {
       title: 'Boards',
       icon: BarChart2,
-      path: '/gamer',
+      path: '/board',
     },
     {
       title: 'Analisis',

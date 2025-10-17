@@ -129,7 +129,7 @@ export function ChatSheet({ trigger }: { trigger: ReactNode }) {
         {/* HEADER */}
         <SheetHeader>
           <div className="flex items-center justify-between p-3 border-b border-border">
-            <SheetTitle>Chat</SheetTitle>
+            <SheetTitle>ChatBot AI GiziKita</SheetTitle>
           </div>
           <div className="border-b border-border p-3 shadow-xs">
             <div className="flex items-center gap-2">

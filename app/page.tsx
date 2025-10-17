@@ -1,6 +1,7 @@
 'use client';
 
 import CallToAction from '@/components/landing/call-to-action';
+import Chatbot from '@/components/landing/chatbot';
 import Fitur from '@/components/landing/features';
 import Footer from '@/components/landing/footer';
 import Header from '@/components/landing/header';
@@ -20,6 +21,7 @@ export default function Page() {
       <Fitur />
       <CallToAction />
       <Footer />
+      <Chatbot />
     </div>
   );
 }

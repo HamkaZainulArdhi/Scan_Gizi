@@ -35,7 +35,7 @@ export default function Chatbot() {
           <AlertIcon>
             <CircleCheck />
           </AlertIcon>
-         <AlertTitle>Perlu bantuan? AI GiziKita</AlertTitle>
+          <AlertTitle>Perlu bantuan? AI GiziKita</AlertTitle>
         </Alert>
       )}
 

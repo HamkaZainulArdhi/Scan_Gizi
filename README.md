@@ -8,23 +8,23 @@ Dengan dukungan teknologi **AI**, setiap menu MBG dapat **diverifikasi kandungan
 
 ## 🚀 Fitur Utama
 
-* 🤖 **AI Scanner Gizi** — Menganalisis kandungan gizi dari foto menu secara otomatis.
-* 🍽️ **Pantauan Menu Harian** — Orang tua dapat melihat menu dan asupan anak setiap hari.
-* 📊 **Data Gizi Transparan** — Menampilkan hasil analisis gizi yang mudah dipahami.
-* 🧶 **Riwayat Analisis** — Simpan dan pantau perkembangan gizi anak dari waktu ke waktu.
-* 🧠 **Dukungan Program MBG** — Terintegrasi dengan sistem Makan Bergizi Gratis untuk sekolah.
+- 🤖 **AI Scanner Gizi** — Menganalisis kandungan gizi dari foto menu secara otomatis.
+- 🍽️ **Pantauan Menu Harian** — Orang tua dapat melihat menu dan asupan anak setiap hari.
+- 📊 **Data Gizi Transparan** — Menampilkan hasil analisis gizi yang mudah dipahami.
+- 🧶 **Riwayat Analisis** — Simpan dan pantau perkembangan gizi anak dari waktu ke waktu.
+- 🧠 **Dukungan Program MBG** — Terintegrasi dengan sistem Makan Bergizi Gratis untuk sekolah.
 
 ---
 
 ## 🧩 Teknologi yang Digunakan
 
-| Stack                      | Teknologi                                                                     |
-| -------------------------- | ----------------------------------------------------------------------------- |
-| **Framework**              | [Next.js 15](https://nextjs.org/)                                             |
-| **Library UI**             | [React](https://reactjs.org/) + [Tailwind CSS](https://tailwindcss.com/)      |
-| **Animation**              | [Framer Motion](https://www.framer.com/motion/)                               |
-| **Deployment**             | [Vercel](https://vercel.com/)                                                 |
-| **AI/Backend Integration** | Express.js, Node.js dan python YOLO V11 LLM Gemini AI Model                     |
+| Stack                      | Teknologi                                                                |
+| -------------------------- | ------------------------------------------------------------------------ |
+| **Framework**              | [Next.js 15](https://nextjs.org/)                                        |
+| **Library UI**             | [React](https://reactjs.org/) + [Tailwind CSS](https://tailwindcss.com/) |
+| **Animation**              | [Framer Motion](https://www.framer.com/motion/)                          |
+| **Deployment**             | [Vercel](https://vercel.com/)                                            |
+| **AI/Backend Integration** | Express.js, Node.js dan python YOLO V11 LLM Gemini AI Model              |
 
 ---
 
@@ -98,12 +98,11 @@ Silakan buat **pull request** atau **laporkan issue** bila menemukan bug atau id
 
 ## 🧑‍💻 Tim Pengembang
 
-| Nama                                              | Peran                               |
-| ------------------------------------------------- | ----------------------------------- |
+| Nama                                             | Peran                               |
+| ------------------------------------------------ | ----------------------------------- |
 | [Hamka Zainul Ardhi](https://hamkacv.vercel.app) | Backend Developer & AI Integration  |
-| [Habib Rafi'i](https://github.com/username)       | Frontend Developer & UI/UX Designer |
-| [Avril Nur Adi P](https://github.com/username)    | Product Manager & Quality assurance |
-
+| [Habib Rafi'i](https://github.com/username)      | Frontend Developer & UI/UX Designer |
+| [Avril Nur Adi P](https://github.com/username)   | Product Manager & Quality assurance |
 
 ---
 

@@ -313,9 +313,7 @@ export function MenuView() {
             <CardTitle>Riwayat Scan Makanan</CardTitle>
           </CardHeader>
           <CardHeader>
-            <Badge variant="success" appearance="outline" size="lg">
-              SD
-            </Badge>
+            <Badge>SD</Badge>
             <Badge>SMP</Badge>
             <Badge>SMA</Badge>
           </CardHeader>

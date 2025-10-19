@@ -3,8 +3,18 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { User as SupabaseUser } from '@supabase/supabase-js';
+import { motion } from 'framer-motion';
 import { History, Scan } from 'lucide-react';
 import type { NutritionScan } from '@/types/types';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ImageUpload } from './image-upload';
@@ -25,6 +35,7 @@ export function DashboardContent({ user }: DashboardContentProps) {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const [imageUploadKey, setImageUploadKey] = useState(0);
+  const [analysisDialogOpen, setAnalysisDialogOpen] = useState(false);
 
   const handleImageUploaded = async (imageUrl: string) => {
     setIsAnalyzing(true);
@@ -48,6 +59,7 @@ export function DashboardContent({ user }: DashboardContentProps) {
       const scanResult: NutritionScan = data;
       setCurrentScan(scanResult);
       setViewState('review');
+      setAnalysisDialogOpen(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Gagal menganalisis');
     } finally {
@@ -142,6 +154,58 @@ export function DashboardContent({ user }: DashboardContentProps) {
             )}
           </div>
         )}
+
+        <AlertDialog
+          open={analysisDialogOpen}
+          onOpenChange={setAnalysisDialogOpen}
+        >
+          <AlertDialogContent className="flex flex-col items-center text-center gap-4 max-w-xs  rounded-lg ">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 10 }}
+              className="flex items-center justify-center w-16 h-16 rounded-full bg-green-100"
+            >
+              <motion.svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="rgb(34,197,94)"
+                className="w-10 h-10"
+              >
+                <motion.path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M5 13l4 4L19 7"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 0.6 }}
+                />
+              </motion.svg>
+            </motion.div>
+
+            <AlertDialogHeader className="text-center items-center justify-center">
+              <AlertDialogTitle>Analisis Selesai</AlertDialogTitle>
+              <AlertDialogDescription className="text-center">
+                Analisis gambar selesai dan hasil gizi siap ditinjau. Apakah
+                ingin melihat hasil sekarang?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+
+            <AlertDialogFooter className="w-full">
+              <AlertDialogAction
+                onClick={() => {
+                  setViewState('review');
+                  setAnalysisDialogOpen(false);
+                }}
+                className="w-full"
+              >
+                Lihat Hasil
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
 
         {viewState === 'review' && currentScan && (
           <div className="max-w-6xl mx-auto">

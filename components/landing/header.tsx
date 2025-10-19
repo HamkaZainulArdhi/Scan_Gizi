@@ -189,13 +189,15 @@ const Header = () => {
                     </Button>
                   ))}
                   <div className="pt-4">
-                    <Button
-                      className="w-full"
-                      variant="primary"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Masuk SPPG
-                    </Button>
+                    <Link href="/signin">
+                      <Button
+                        className="w-full"
+                        variant="primary"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        Masuk SPPG
+                      </Button>
+                    </Link>
                   </div>
                 </nav>
               </DrawerContent>

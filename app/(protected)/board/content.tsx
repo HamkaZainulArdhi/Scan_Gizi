@@ -2,10 +2,9 @@
 
 import { Fragment } from 'react';
 import type { User as SupabaseUser } from '@supabase/supabase-js';
-import { Disc, MapPin } from 'lucide-react';
+import { Disc, MapPin, MapPinHouse } from 'lucide-react';
 import { useHistoryScans } from '@/hooks/use-history-scan';
 import { useProfile } from '@/providers/profile-provider';
-import { ContentLoader } from '@/components/common/content-loader';
 import { EarningsChart } from '@/app/(protected)/components/demo1';
 import { UserHero } from '@/app/components/partials/common/user-hero';
 import Stats from '../history/components/stats';
@@ -19,29 +18,33 @@ export function ProfileContent({ user }: HistoryTableProps) {
   const { profile } = useProfile();
   const { scans } = useHistoryScans(user);
 
-  if (!profile)
-    return (
-      <div className="flex items-center justify-center min-h-[500px]">
-        <ContentLoader />
-      </div>
-    );
+  const safeProfile = profile || {
+    nama_lengkap: 'Pengguna',
+    avatar_url: '/media/benner/add-foto.png',
+    sppg: {
+      alamat: 'Alamat belum diatur',
+      kecamatan: 'Kecamatan belum diisi',
+      nama: 'Nama SPPG belum diisi',
+    },
+  };
 
   return (
     <Fragment>
       <UserHero
-        name={profile.nama_lengkap || 'Tanpa Nama'}
-        image={profile.avatar_url || '/default-avatar.png'}
+        name={safeProfile.nama_lengkap || 'Pengguna'}
+        image={safeProfile.avatar_url || '/media/benner/add-foto.png'}
         info={[
           {
-            label: profile.sppg?.alamat || 'Alamat belum diatur',
+            label: safeProfile.sppg?.alamat || 'Alamat belum diatur',
             icon: MapPin,
           },
           {
-            label: profile.sppg?.kecamatan || 'Kecamatan belum diisi',
-            icon: MapPin,
+            label: safeProfile.sppg?.kecamatan || 'Kecamatan belum diisi',
+            icon: MapPinHouse,
           },
           {
-            label: profile.sppg?.nama || 'Jabatan belum diisi',
+            label: safeProfile.sppg?.nama || 'Nama SPPG belum diisi',
+
             icon: Disc,
           },
         ]}

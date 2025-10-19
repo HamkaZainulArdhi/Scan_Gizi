@@ -8,7 +8,7 @@ if (!googleApiKey) {
 }
 const genAI = new GoogleGenerativeAI(googleApiKey);
 const texterror =
-  'Analisis nutrisi gagal dilakukan. Beberapa makanan mungkin tidak terdeteksi dengan benar. unggah foto lain dan pastikan semua makanan dengan terlihat jelas.';
+  'Analisis nutrisi gagal dilakukan. unggah foto lain dan pastikan semua makanan dengan terlihat jelas dan batasan deteksi 50X request perhari.';
 
 export async function POST(request: NextRequest) {
   try {

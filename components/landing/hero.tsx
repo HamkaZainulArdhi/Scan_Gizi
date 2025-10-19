@@ -144,7 +144,7 @@ export default function Hero() {
           className="mt-6 flex items-center justify-center gap-4"
         >
           <a
-            href="/aiscanner"
+            href="https://www.youtube.com/watch?v=3nFVbNPF-HQ"
             className="rounded-full border-primary border px-5 py-3 text-sm font-semibold transition-colors"
           >
             Video Demo
